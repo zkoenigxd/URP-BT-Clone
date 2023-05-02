@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "358542503850",
+    "project_id": "the-last-admiral",
+    "storage_bucket": "the-last-admiral.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358542503850:android:9bf25d65bc2543fda305d3",
+        "android_client_info": {
+          "package_name": "com.CuilTheoryDevelopment.TheLastAdmiral"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358542503850-vm4eve6tev7d0f60um7764q0smbaf470.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUPesJpu420qr1UDRnbMFVYli9qmc517o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358542503850-vm4eve6tev7d0f60um7764q0smbaf470.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

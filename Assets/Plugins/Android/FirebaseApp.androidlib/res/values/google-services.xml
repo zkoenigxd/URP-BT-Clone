@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">358542503850</string>
+  <string name="google_storage_bucket" translatable="false">the-last-admiral.appspot.com</string>
+  <string name="project_id" translatable="false">the-last-admiral</string>
+  <string name="google_api_key" translatable="false">AIzaSyAUPesJpu420qr1UDRnbMFVYli9qmc517o</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAUPesJpu420qr1UDRnbMFVYli9qmc517o</string>
+  <string name="google_app_id" translatable="false">1:358542503850:android:9bf25d65bc2543fda305d3</string>
+  <string name="default_web_client_id" translatable="false">358542503850-vm4eve6tev7d0f60um7764q0smbaf470.apps.googleusercontent.com</string>
+</resources>
