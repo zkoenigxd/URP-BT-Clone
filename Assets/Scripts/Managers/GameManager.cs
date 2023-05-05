@@ -17,6 +17,7 @@ public class GameManager : Singleton<GameManager>
     FirebaseFirestore db;
     Vector2 entryVector = Vector2.up;
     Player player;
+    UpgradeManager upgradeManager;
 
     int myLevel = 0;
 
@@ -44,10 +45,16 @@ public class GameManager : Singleton<GameManager>
         player = FindObjectOfType<Player>();
     }
 
+    public void ResetCurrency()
+    {
+
+    }
+
     public void GetCurrency()
     {
-        if(player != null)
-            currencyCollected = player.GetComponentInChildren<CurrecyController>().CurrentCurrency;
+        upgradeManager = FindObjectOfType<UpgradeManager>();
+        if (upgradeManager != null)
+            currencyCollected += upgradeManager.PlayerCurrency;
     }
 
     private IEnumerator LoginAsync()
@@ -138,6 +145,7 @@ public class GameManager : Singleton<GameManager>
 
     async public void AddData()
     {
+        Debug.Log(currencyCollected);
         DocumentReference docRef = db.Collection("TestUnity").Document(currentUserID);
         Dictionary<string, object> stats = new ()
         {
@@ -145,7 +153,7 @@ public class GameManager : Singleton<GameManager>
             { "Scrap Collected", currencyCollected },
             { "Ship Class", myLevel }
         };
-        await docRef.SetAsync(stats).ContinueWithOnMainThread(task => { Debug.Log(currentUser + "'s data added successfully"); });
+        await docRef.SetAsync(stats).ContinueWithOnMainThread(task => { Debug.Log(currentUser + "'s data added successfully " + currencyCollected); });
     }
 
     public void GetUserData()
@@ -183,8 +191,8 @@ public class GameManager : Singleton<GameManager>
 
     public void ClearUserData()
     {
-        currentUser = "Error, user not set";
-        currentUserID = "Null ID";
+        currentUser = " ";
+        currentUserID = " ";
         currencyCollected = 0;
         myLevel = 0;
         loggedIn = false;

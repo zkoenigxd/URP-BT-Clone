@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,10 +9,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] Button restartOnWinButton;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject settingsMenuCanvas;
+    [SerializeField] GameObject upgradeMenu;
+    [SerializeField] GameObject controlMenuUI;
+    [SerializeField] GameObject infoDisplayUI;
+    [SerializeField] GameObject controlUI;
     GameManager _gameManager;
     AudioManager _audioManager;
 
-    // Start is called before the first frame update
     void Awake()
     {
         _gameManager = GameManager.Instance;
@@ -24,7 +28,30 @@ public class UIManager : MonoBehaviour
         Time.timeScale = 1;
         restartButton.gameObject.SetActive(false);
         restartOnWinButton.gameObject.SetActive(false);
+        upgradeMenu.SetActive(false);
+        controlUI.SetActive(true);
+        controlMenuUI.SetActive(true);
+        infoDisplayUI.SetActive(true);
         LockScreenToLandscape();
+    }
+
+    public void OpenUpgradeMenu()
+    {
+        _gameManager.GetCurrency();
+        _gameManager.AddData();
+        PauseGame();
+        controlUI.SetActive(false);
+        infoDisplayUI.SetActive(false);
+        upgradeMenu.SetActive(true);
+    }
+
+    public void CloseUpgradeMenu()
+    {
+        ResumeGame();
+        upgradeMenu.SetActive(false);
+        controlUI.SetActive(true);
+        infoDisplayUI.SetActive(true);
+        controlMenuUI.SetActive(true);
     }
 
     void LockScreenToLandscape()
@@ -44,7 +71,6 @@ public class UIManager : MonoBehaviour
 
     void LoadMainMenuScene()
     {
-        _gameManager.GetCurrency();
         SceneManager.LoadScene(0);
     }
 
@@ -66,7 +92,6 @@ public class UIManager : MonoBehaviour
 
     public void QuitGame()
     {
-        _gameManager.GetCurrency();
         _gameManager.AddData();
         LoadMainMenuScene();
     }
@@ -79,11 +104,17 @@ public class UIManager : MonoBehaviour
 
     public void DisplayWinButton()
     {
-        restartOnWinButton.gameObject.SetActive(true);
+        if (restartOnWinButton != null)
+            restartOnWinButton.gameObject.SetActive(true);
+        else
+            Debug.LogWarning("Reset On Win Button not found");
     }
 
     public void DisplayRestartButton()
     {
-        restartButton.gameObject.SetActive(true);
+        if (restartOnWinButton != null)
+            restartButton.gameObject.SetActive(true);
+        else
+            Debug.LogWarning("Reset Button not found");
     }
 }

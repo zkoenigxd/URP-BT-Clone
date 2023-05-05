@@ -32,8 +32,8 @@ public class MainMenuScript : MonoBehaviour
 
     void Awake()
     {
-        _gameManager = GameManager.Instance;
         _audioManager = AudioManager.Instance;
+        _gameManager = GameManager.Instance;
         Debug.Log(_gameManager.ToString());
         Debug.Log(_gameManager.loggedIn.ToString());
 
@@ -52,7 +52,11 @@ public class MainMenuScript : MonoBehaviour
                 Login();
             }
             else
+            {
+                _gameManager.ClearUserData();
                 GoToLogin();
+            }
+
         }
         AllowAutoRotation();
     }

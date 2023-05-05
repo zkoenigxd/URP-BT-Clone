@@ -4,49 +4,67 @@ using UnityEngine;
 
 public class ArenaManager : MonoBehaviour
 {
+    [SerializeField] Faction faction;
     [SerializeField] float dragMultiplier;
+    [SerializeField] EnemySpawner spawner;
+
+    [SerializeField] StationController stationController;
 
     bool isPlayerInZone;
 
-    public List<GameObject> units = new();
+    public List<EnemyBrain> enemyUnits;
     public bool IsPlayerInZone => isPlayerInZone;
     public float DragMultiplier => dragMultiplier;
+    public Faction ArenaFaction => faction;
 
     private void Awake()
     {
         isPlayerInZone = true;
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        units.Add(player);
-        foreach (var enemy in GameObject.FindGameObjectsWithTag("Enemy"))
+        CheckAllEnemiesDefeated();
+    }
+
+    public void RemoveUnit(EnemyBrain unit)
+    {
+        if (unit != null)
         {
-            units.Add(enemy);
+            enemyUnits.Remove(unit);
         }
     }
 
-    public bool AllEnemiesDefeated()
+    public bool CheckAllEnemiesDefeated()
     {
-
-        if (units.Count == 1)
+        Debug.Log("Number of Units: " + enemyUnits.Count);
+        if (enemyUnits.Count == 0)
         {
-            if (units[0].GetComponent<Player>() != null)
-                return true;
+            if (stationController != null)
+                stationController.ArenaIsSafe();
+            else
+                Debug.Log("StationController Not Found");
+            return true;
         }
+        if(stationController != null)
+            stationController.ArenaIsNotSafe();
         return false;
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
-        if (collider.gameObject.name == "Player")
+        if (collider.gameObject.GetComponent<Player>())
             isPlayerInZone = false;
-        if (collider.gameObject.GetComponent<Enemy>() != null)
-            collider.gameObject.GetComponent<Enemy>().LeftArena();
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.name == "Player")
+        if (collider.gameObject.GetComponent<Player>())
             isPlayerInZone = true;
-        if (collider.gameObject.GetComponent<Enemy>() != null)
-            collider.gameObject.GetComponent<Enemy>().ReturnedToArena();
+    }
+
+    public void ListAllEnemies()
+    {
+        foreach (EnemyBrain enemy in spawner.GetComponentsInChildren<EnemyBrain>())
+        {
+            enemyUnits.Add(enemy);
+            Debug.Log("Added " + enemy.name + " to unit list");
+        }
     }
 }

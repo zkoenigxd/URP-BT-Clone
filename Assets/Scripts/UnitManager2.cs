@@ -116,16 +116,17 @@ public class UnitManager2 : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines();
-        arena.units.Remove(this.gameObject);
+        arena.RemoveUnit(this.GetComponent<EnemyBrain>());
+        Debug.Log("Removed " + name + " from unit list");
         if (GetComponent<Player>() != null)
         {
             uIManager.DisplayRestartButton();
             return;
         }
-        if (arena.AllEnemiesDefeated())
+        if (arena.CheckAllEnemiesDefeated())
         {
             Debug.Log("Level Cleared");
-            uIManager.DisplayWinButton();
+            //uIManager.DisplayWinButton();
         }
     }
 }

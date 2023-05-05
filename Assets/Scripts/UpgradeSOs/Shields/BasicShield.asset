@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8eb3d2fd9123a8941b1b36d993e872ba, type: 3}
+  m_Name: BasicShield
+  m_EditorClassIdentifier: 
+  upgradeName: Makeshift Shield
+  description: I'm not sure what Dr. Rieft was trying to accomplish when they soldered
+    those supercapacitors onto our long distance radio, but I did notice a marked
+    decrease in micrometeorite impacts to the hull.
+  level: 0
+  buyCost: 2
+  sellCost: 1
+  storeIcon: {fileID: 21300000, guid: 03f67f53d3bd2c04080594db61a9408f, type: 3}
+  faction: 2
+  shieldCapacity: 15
+  powerConsumptionRate: 2
+  beginChargePercent: 0.25
+  damageReduction: 0.5
+  rechargeRate: 2
+  rechargeDelay: 2
+  shieldColor: {r: 1, g: 1, b: 1, a: 1}

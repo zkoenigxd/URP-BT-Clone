@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8864662f00e02a0428e25d1d099c78e9, type: 3}
+  m_Name: BasicLaser(Mounted)
+  m_EditorClassIdentifier: 
+  upgradeName: Makeshift Laser
+  description: Placeholder Description
+  level: 0
+  buyCost: 2
+  sellCost: 1
+  storeIcon: {fileID: 21300000, guid: d244348ca42ef7c4d8fd8ce4efeccd5c, type: 3}
+  faction: 0
+  bulletPrefab: {fileID: 4266625366842318222, guid: bcad4bbc161bd7344a24ef6f09d1c333, type: 3}
+  bulletSpeed: -30
+  fireDelay: 1
+  powerCost: 1
+  targetConeAngle: 30
+  tracingEnable: 0
+  deltaAngle: 0
+  oneStepRotation: 0
+  deltaTimeStepRotation: 0

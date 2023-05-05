@@ -8,13 +8,19 @@ public class PlasmaBehavior : MonoBehaviour
     ShieldController shield;
     [SerializeField] float damage = 1;
     [SerializeField] int layerOffset = 4;
+    [SerializeField] float activeTime = 10;
+
+    private void Awake()
+    {
+        StartCoroutine(PersistForSeconds());
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         hitObject = collision.gameObject;
         if (hitObject != null)
         {
-            if (hitObject.layer + layerOffset == gameObject.layer)
+            if (hitObject.layer + layerOffset == gameObject.layer || hitObject.layer == 10 || hitObject.layer == 11)
                 return;
             if (shield = hitObject.GetComponent<ShieldController>())
             {
@@ -30,5 +36,12 @@ public class PlasmaBehavior : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
+    }
+
+
+    IEnumerator PersistForSeconds()
+    {
+        yield return new WaitForSeconds(activeTime);
+        Destroy(gameObject);
     }
 }

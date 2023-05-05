@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     [SerializeField] float minZoom;
     [SerializeField] GameObject fireDirection;
     [SerializeField] float spawnDelay = .5f;
-
     public Rigidbody2D PlayerRB => playerRB;
     public Vector2 FireInput => fireInput;
     public Vector2 MoveInput => moveInput;
@@ -51,6 +50,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ResetWeaponInput()
+    {
+        attachedControllers = GetComponentsInChildren<WeaponController>();
+    }
+
     private void Shoot_started(InputAction.CallbackContext obj)
     {
             for (int i = 0; i < attachedControllers.Count(); ++i)
@@ -77,7 +81,7 @@ public class Player : MonoBehaviour
         unitManager.SetMoveInput(playerInputActions.Player.Move.ReadValue<Vector2>());
         if (playerInputActions.Player.Shoot.ReadValue<Vector2>() != Vector2.zero)
         {
-            fireDirection.transform.rotation = Quaternion.FromToRotation(Vector2.up, playerInputActions.Player.Shoot.ReadValue<Vector2>());
+            fireDirection.transform.rotation = Quaternion.FromToRotation(Vector2.down, playerInputActions.Player.Shoot.ReadValue<Vector2>());
         }
     }
 

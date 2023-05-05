@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8505563753788189472}
   - component: {fileID: 4487861424212972666}
   - component: {fileID: 4610763736694503236}
-  - component: {fileID: -5063758355655453774}
+  - component: {fileID: 2155140436921154581}
   m_Layer: 10
   m_Name: BulletLaserGreen
   m_TagString: Bullet
@@ -134,7 +134,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.03, y: 0.28}
   m_EdgeRadius: 0
---- !u!114 &-5063758355655453774
+--- !u!114 &2155140436921154581
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,8 +143,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2708990384368261712}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 501db99df4320a94bb037d9721d98119, type: 3}
+  m_Script: {fileID: 11500000, guid: c0a592fc0ddef254bb07d2dc43f89b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 2
   layerOffset: 4
+  activeTime: 3
