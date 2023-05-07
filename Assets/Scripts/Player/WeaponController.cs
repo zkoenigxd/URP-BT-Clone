@@ -57,12 +57,19 @@ public class WeaponController : MonoBehaviour
             deltaTimeStepRotation = weaponType.DeltaTimeStepRotation;
             deltaAngle = weaponType.DeltaAngle;
         }
-        BaseStart();
+
         powerController = GetComponentInParent<PowerController>();
+        if (traceTarget == null)
+        {
+            traceTarget = FindAnyObjectByType<Player>().transform;
+            Debug.Log("Target assigned as: " + traceTarget.gameObject.name);
+        }
+
         if (GetComponentInParent<Player>())
             layer = 10;
         if (GetComponentInParent<EnemyBrain>())
             layer = 11;
+        BaseStart();
     }
 
     public void InstallComponent(WeaponUSO weaponUSO)
