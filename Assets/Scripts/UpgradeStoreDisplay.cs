@@ -90,6 +90,11 @@ public class UpgradeStoreDisplay : MonoBehaviour
         }
     }
 
+    void DisplayItemInstalledUI(string name)
+    {
+
+    }
+
 
 
 

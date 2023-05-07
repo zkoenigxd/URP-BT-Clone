@@ -20,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
     public void StartWave()
     {
         wave++;
-        for (int i = 0; i < enemyPrefabs.Count; i++)
+        for (int i = 0; i < Random.Range(1, wave * 2); i++)
         {
             GameObject childObject = Instantiate(enemyPrefabs[Random.Range(0, (wave < enemyPrefabs.Count) ? wave : enemyPrefabs.Count)], // Random enemy
                         spawnLocations[Random.Range(0, spawnLocations.Count)].position + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0), //Random position from randon waypoint

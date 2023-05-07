@@ -10,7 +10,9 @@ public class UpgradeItemDisplay : MonoBehaviour
     [SerializeField] Image panel;
     [SerializeField] TMP_Text upgradeNameText;
     [SerializeField] TMP_Text costText;
+    [SerializeField] TMP_Text slotTypeText;
     [SerializeField] Image iconImage;
+    [SerializeField] Sprite nullImage;
     [SerializeField] Button buyButton;
     [SerializeField] Button infoButton;
     [SerializeField] UpgradeSO upgrade;
@@ -76,6 +78,8 @@ public class UpgradeItemDisplay : MonoBehaviour
                 slotType= UpgradeType.Shield;
                 break;
         }
+        slotTypeText.text = slotType.ToString() + " Slot";
+        panel.color = panelColor;
         this.upgrade = upgrade;
         upgradeNameText.text = upgrade.Name;
         costText.text = "Scrap: " + upgrade.SellCost;
@@ -87,7 +91,7 @@ public class UpgradeItemDisplay : MonoBehaviour
         upgradeNameText.text = "Empty Slot";
         upgrade = null;
         costText.gameObject.SetActive(false);
-        iconImage.gameObject.SetActive(false);
+        iconImage.sprite = nullImage;
         buyButton.gameObject.SetActive(false);
         infoButton.gameObject.SetActive(false);
     }
