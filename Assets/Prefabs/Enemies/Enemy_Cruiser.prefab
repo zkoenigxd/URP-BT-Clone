@@ -2327,7 +2327,7 @@ PrefabInstance:
     - target: {fileID: 3479430133443397513, guid: d4f24bd46883daa4f90c37991dd227a0, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: 1042ae36dc9b3904c96c39641c64c371, type: 2}
+      objectReference: {fileID: 11400000, guid: 614c738893a63fe4fae4f6aacc40c925, type: 2}
     - target: {fileID: 3479430133443397513, guid: d4f24bd46883daa4f90c37991dd227a0, type: 3}
       propertyPath: audioSource
       value: 
@@ -6488,7 +6488,7 @@ PrefabInstance:
     - target: {fileID: 8602056669054888229, guid: b10bc12d185c8ba4cb117bfe2df6f4d4, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: 1042ae36dc9b3904c96c39641c64c371, type: 2}
+      objectReference: {fileID: 11400000, guid: d22bbaa0eb031394489a0552921f7ba0, type: 2}
     - target: {fileID: 8602056669054888229, guid: b10bc12d185c8ba4cb117bfe2df6f4d4, type: 3}
       propertyPath: audioSource
       value: 

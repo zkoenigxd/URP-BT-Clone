@@ -8916,8 +8916,6 @@ MonoBehaviour:
   weaponUpgrades:
   - {fileID: 11400000, guid: dd607069356a45b419f86289b57d19c2, type: 2}
   - {fileID: 11400000, guid: 1042ae36dc9b3904c96c39641c64c371, type: 2}
-  - {fileID: 11400000, guid: d22bbaa0eb031394489a0552921f7ba0, type: 2}
-  - {fileID: 11400000, guid: 614c738893a63fe4fae4f6aacc40c925, type: 2}
   - {fileID: 11400000, guid: 70dbd8413ce22e846befa19efb65ef74, type: 2}
   shieldUpgrades:
   - {fileID: 11400000, guid: 1590a05f2d4d3af4aadfe2e9cc928328, type: 2}
