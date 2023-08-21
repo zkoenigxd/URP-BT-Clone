@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: BasicCargo
   m_EditorClassIdentifier: 
   upgradeName: Makeshift Cargo Bay
-  description: 
+  description: This small space looks suspiciouly like a broken airlock, not that
+    this can be verified - the ship's manual has been lost for decades.
   level: 0
-  buyCost: 2
+  buyCost: 1
   sellCost: 1
   storeIcon: {fileID: 21300000, guid: d244348ca42ef7c4d8fd8ce4efeccd5c, type: 3}
   faction: 2
-  cargoCapacity: 30
+  cargoCapacity: 25

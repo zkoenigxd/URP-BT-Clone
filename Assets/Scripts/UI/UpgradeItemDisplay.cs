@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -21,6 +19,7 @@ public class UpgradeItemDisplay : MonoBehaviour
     [SerializeField] Color weaponPanelColor;
     [SerializeField] Color powerPanelColor;
     [SerializeField] Color cargoPanelColor;
+    [SerializeField] Color magnetPanelColor;
 
     UpgradeType slotType;
     Color panelColor;
@@ -49,6 +48,9 @@ public class UpgradeItemDisplay : MonoBehaviour
             case UpgradeType.Shield:
                 panelColor = shieldPanelColor;
                 break;
+            case UpgradeType.Magnet:
+                panelColor = magnetPanelColor;
+                break;
         }
         panel.color = panelColor;
         this.upgrade = upgrade;
@@ -76,6 +78,10 @@ public class UpgradeItemDisplay : MonoBehaviour
             case UpgradeType.Shield:
                 panelColor = shieldPanelColor;
                 slotType= UpgradeType.Shield;
+                break;
+            case UpgradeType.Magnet:
+                panelColor = magnetPanelColor;
+                slotType = UpgradeType.Magnet;
                 break;
         }
         slotTypeText.text = slotType.ToString() + " Slot";

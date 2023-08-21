@@ -99,7 +99,9 @@ MonoBehaviour:
   panel: {fileID: 8609116758005564737}
   upgradeNameText: {fileID: 8609116758825148852}
   costText: {fileID: 8609116759321325532}
+  slotTypeText: {fileID: 0}
   iconImage: {fileID: 8609116759445280532}
+  nullImage: {fileID: 0}
   buyButton: {fileID: 8804017544040239945}
   infoButton: {fileID: 4112293495292441626}
   upgrade: {fileID: 0}
@@ -107,6 +109,7 @@ MonoBehaviour:
   weaponPanelColor: {r: 0.6981132, g: 0.19538383, b: 0.19538383, a: 1}
   powerPanelColor: {r: 1, g: 0.8044406, b: 0, a: 1}
   cargoPanelColor: {r: 0.3679245, g: 0.18556863, b: 0.07867564, a: 1}
+  magnetPanelColor: {r: 0.7921569, g: 0.5058824, b: 0.7882353, a: 1}
 --- !u!223 &7325367703044890031
 Canvas:
   m_ObjectHideFlags: 0

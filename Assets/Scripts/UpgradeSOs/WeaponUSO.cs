@@ -13,6 +13,7 @@ public class WeaponUSO : UpgradeSO
     [SerializeField] float fireDelay;
     [SerializeField] float powerCost;
     [SerializeField] float targetConeAngle = 30;
+    [SerializeField] float accuracy;
 
     [Space(20)]
     [SerializeField] bool tracingEnable = true;
@@ -32,5 +33,6 @@ public class WeaponUSO : UpgradeSO
     public float DeltaAngle => deltaAngle;
     public bool OneStepRotation => oneStepRotation;
     public float DeltaTimeStepRotation => deltaTimeStepRotation;
+    public float Accuracy => accuracy;
 
 }

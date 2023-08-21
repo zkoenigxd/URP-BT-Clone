@@ -20,6 +20,7 @@ public class WeaponController : MonoBehaviour
     int layer;
 
     float bulletSpeed;
+    float accuracy;
     float fireDelay;
     float powerCost;
     float targetConeAngle = 30;
@@ -56,12 +57,15 @@ public class WeaponController : MonoBehaviour
             oneStepRotation = weaponType.OneStepRotation;
             deltaTimeStepRotation = weaponType.DeltaTimeStepRotation;
             deltaAngle = weaponType.DeltaAngle;
+            accuracy = weaponType.Accuracy;
         }
 
         powerController = GetComponentInParent<PowerController>();
+        Debug.Log("TraceTarget is: " + traceTarget.ToString());
         if (traceTarget == null)
         {
-            traceTarget = FindAnyObjectByType<Player>().transform;
+            Debug.Log("Loking for Player");
+            traceTarget = GameObject.Find("Player").transform;
             Debug.Log("Target assigned as: " + traceTarget.gameObject.name);
         }
 
@@ -84,6 +88,7 @@ public class WeaponController : MonoBehaviour
         oneStepRotation = weaponType.OneStepRotation;
         deltaTimeStepRotation = weaponType.DeltaTimeStepRotation;
         deltaAngle = weaponType.DeltaAngle;
+        accuracy = weaponType.Accuracy;
     }
 
     public void RemoveComponent()
@@ -98,6 +103,7 @@ public class WeaponController : MonoBehaviour
         oneStepRotation = false;
         deltaTimeStepRotation = 0;
         deltaAngle = 0;
+        accuracy = 0;
     }
 
     public void SetTarget(Transform target)
@@ -140,32 +146,17 @@ public class WeaponController : MonoBehaviour
     
     protected void OneShot(int index = 0)
     {
-        bool i = IfIndexGood(index);
-        if (i && powerController == null)
-        {
-            if (TargetInSight())
-            {
-                //Debug.Log(TargetInSight().ToString());
-                GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletStartPoses[index].position, Quaternion.identity);
-                bullet.layer = layer;
-                Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
-                audioSource.Play();
-                bullet.GetComponent<Collider2D>().enabled = true;
-                rb.velocity = bulletSpeed * (bulletStartPoses[index].up);
-                bullet.transform.rotation = transform.rotation;
-            }
-        }
-        else if (i && TargetInSight())
+        Vector3 scatter = new (Random.Range(-accuracy / 2.0f, accuracy / 2.0f), Random.Range(-accuracy / 2.0f, accuracy / 2.0f), 0);
+        if (IfIndexGood(index) && TargetInSight())
         {
             if (powerController.ConsumePower(powerCost))
             {
-                //Debug.Log(TargetInSight().ToString());
                 GameObject bullet = (GameObject)Instantiate(bulletPrefab, bulletStartPoses[index].position, Quaternion.identity);
                 bullet.layer = layer;
                 Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
                 audioSource.Play();
                 bullet.GetComponent<Collider2D>().enabled = true;
-                rb.velocity = bulletSpeed * (bulletStartPoses[index].up);
+                rb.velocity = bulletSpeed * (bulletStartPoses[index].up + scatter).normalized;
                 bullet.transform.rotation = transform.rotation;
             }
         }

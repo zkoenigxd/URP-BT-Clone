@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 724392781d5a9f14cb4cdba9ad9c6126, type: 3}
+  m_Name: Karang
+  m_EditorClassIdentifier: 
+  factionName: The Great Karang
+  species: Plants
+  techSpecialties:
+  - Power
+  - Shields
+  shipSpecialties:
+  - Refitting
+  GravityWellAttributes:
+  - Class B Star
+  - Magnitude -6
+  SectorAttributes:
+  - Solar Storms
+  mainColor: {r: 0.7529412, g: 0.9490196, b: 0.85490197, a: 1}
+  minorColor: {r: 0, g: 0, b: 0, a: 0}
+  startLevelKey: KarangHomeworld

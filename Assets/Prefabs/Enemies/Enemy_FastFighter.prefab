@@ -127,7 +127,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0.3
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -175,8 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2a8ab5ba5ce68428372e7bb15a908f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSpeed: 20
-  boostScalar: 0
   engineAnimations: {fileID: 6524284739695624182}
   engineSound: {fileID: 6524284738380016258}
 --- !u!82 &6524284738380016267
@@ -448,7 +446,7 @@ MonoBehaviour:
   radius: 1.55
   height: 1
   canMove: 1
-  maxSpeed: 12
+  maxSpeed: 30
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -465,11 +463,11 @@ MonoBehaviour:
     maximumPeriod: 2
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
-  maxAcceleration: 6
+  maxAcceleration: 16
   rotationSpeed: 300
-  slowdownDistance: 1
+  slowdownDistance: 0
   pickNextWaypointDist: 6
-  endReachedDistance: 4
+  endReachedDistance: 5
   alwaysDrawGizmos: 0
   slowWhenNotFacingTarget: 0
   whenCloseToDestination: 1
@@ -1219,6 +1217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6524284740169985263}
   - component: {fileID: 6524284740169985232}
+  - component: {fileID: 4103937083096285413}
   m_Layer: 7
   m_Name: Ship
   m_TagString: Untagged
@@ -1339,6 +1338,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4103937083096285413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6524284740169985233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecc6216a8ddd5ed48a458086b53595d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerSlider: {fileID: 0}
+  powerType: {fileID: 11400000, guid: 9377cb4c9bc4a244cab2566d3f5b0c53, type: 2}
 --- !u!1 &7986148522736203155
 GameObject:
   m_ObjectHideFlags: 0

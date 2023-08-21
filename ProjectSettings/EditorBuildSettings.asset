@@ -6,11 +6,23 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Menu Scene.unity
+    path: Assets/Scenes/MainMenu.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/ArenaTest.unity
-    guid: 3fc8acdd13e6c734bafef6554d6fdbcd
+    path: Assets/Scenes/LevelUtilities.unity
+    guid: 467898c485ab28b41bfa126aabd15833
+  - enabled: 1
+    path: Assets/Scenes/Terran Levels/TerranHomeworld.unity
+    guid: bed623b063bb352439ed38d48cce3829
+  - enabled: 1
+    path: Assets/Scenes/Terran Levels/TerranMercury.unity
+    guid: 9d92d58eef80081448cf279ed5b72e05
+  - enabled: 1
+    path: Assets/Scenes/Terran Levels/TerranMars.unity
+    guid: 18357ef410568e449b4f8833cf58feec
+  - enabled: 1
+    path: Assets/Scenes/Rak Levels/RakHomeworld.unity
+    guid: 25bf514f5b2583f4f8992de0ad7b5a35
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: a05c0e80f8f083c44a2636668b0e2069, type: 2}
     com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: 99689a328160f5c4999cde4c00a47e02, type: 2}

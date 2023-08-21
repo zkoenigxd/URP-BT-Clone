@@ -241,6 +241,7 @@ MonoBehaviour:
   weaponPanelColor: {r: 0.6981132, g: 0.19538383, b: 0.19538383, a: 1}
   powerPanelColor: {r: 1, g: 0.8044406, b: 0, a: 1}
   cargoPanelColor: {r: 0.3679245, g: 0.18556863, b: 0.07867564, a: 1}
+  magnetPanelColor: {r: 0.7924528, g: 0.5058739, b: 0.7872893, a: 1}
 --- !u!223 &2184282561719546921
 Canvas:
   m_ObjectHideFlags: 0

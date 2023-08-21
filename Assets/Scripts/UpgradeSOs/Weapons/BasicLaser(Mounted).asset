@@ -13,17 +13,18 @@ MonoBehaviour:
   m_Name: BasicLaser(Mounted)
   m_EditorClassIdentifier: 
   upgradeName: Makeshift Laser
-  description: Placeholder Description
+  description: Pretty sure this mount is SUPPOSED to swivel... at least it fires.
   level: 0
   buyCost: 2
   sellCost: 1
   storeIcon: {fileID: 21300000, guid: d244348ca42ef7c4d8fd8ce4efeccd5c, type: 3}
-  faction: 0
+  faction: 2
   bulletPrefab: {fileID: 4266625366842318222, guid: bcad4bbc161bd7344a24ef6f09d1c333, type: 3}
   bulletSpeed: -30
   fireDelay: 1
   powerCost: 1
   targetConeAngle: 30
+  accuracy: 0.1
   tracingEnable: 0
   deltaAngle: 0
   oneStepRotation: 0

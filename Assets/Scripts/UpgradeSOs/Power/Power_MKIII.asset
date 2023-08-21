@@ -13,13 +13,11 @@ MonoBehaviour:
   m_Name: Power_MKIII
   m_EditorClassIdentifier: 
   upgradeName: Big Ol' Reactor
-  description: Stable and sensible, fusion power is a standard for space faring vessels.
-    It has a modest storage capacity, but it recharges faster then most basic equipment
-    can drain it.
+  description: Incredible storage, faster recharge
   level: 3
   buyCost: 50
   sellCost: 20
   storeIcon: {fileID: 21300000, guid: 03f67f53d3bd2c04080594db61a9408f, type: 3}
   faction: 2
   capacity: 100
-  rechargeRate: 6
+  rechargeRate: 4

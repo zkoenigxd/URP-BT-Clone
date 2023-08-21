@@ -10,6 +10,7 @@ public class UpgradeManager : MonoBehaviour
     [SerializeField] List<ShieldUSO> shieldUpgrades = new();
     [SerializeField] List<PowerUSO> powerUpgrades = new();
     [SerializeField] List<CargoUSO> cargoUpgrades = new();
+    [SerializeField] List<MagnetUSO> magnetUpgrades = new();
 
     List<UpgradeSO> availableUpgrades = new();
 
@@ -17,6 +18,7 @@ public class UpgradeManager : MonoBehaviour
     ShieldController shieldController;
     CurrecyController cargoController;
     PowerController powerController;
+    MagnetController magnetController;
 
     List<UpgradeSO> installedUpgrades = new();
 
@@ -35,18 +37,20 @@ public class UpgradeManager : MonoBehaviour
         powerController = player.GetComponentInChildren<PowerController>();
         shieldController = player.GetComponentInChildren<ShieldController>();
         weaponControllers = player.GetComponentsInChildren<WeaponController>();
-        if (cargoController == null || powerController == null || shieldController == null || weaponControllers == null)
-            Debug.LogWarning("Did not find controllers");
-        faction = FindObjectOfType<ArenaManager>().ArenaFaction;
+        magnetController = player.GetComponentInChildren<MagnetController>();
+        if (cargoController == null || powerController == null || shieldController == null || weaponControllers == null || magnetController == null)
+            Debug.LogWarning("Did not find some or all controllers");
         RefreshCurrancy();
-        upgradeStoreDisplay.UpdateCurrency(playerCurrency);
-        GetRegionalAvailability();
         InitializePlayerInstalledUpgradesList();
         InitializeUI();
     }
 
     public void PreDock()
     {
+        faction = GameObject.Find("Arena").GetComponentInChildren<ArenaManager>().ArenaFaction;
+        GetRegionalAvailability();
+        InitializeUI();
+        upgradeStoreDisplay.UpdateCurrency(playerCurrency);
         RefreshCurrancy();
         RefreshUI();
     }
@@ -78,16 +82,20 @@ public class UpgradeManager : MonoBehaviour
         {
             if (playerCurrency >= (upgrade.BuyCost))
             {
-                playerCurrency -= (item.GetUpgradeSO().BuyCost);
+                playerCurrency -= (upgrade.BuyCost);
                 InstallItem(upgrade);
                 upgradeStoreDisplay.UpdateInstallsDisplay(upgrade, false);
+                upgradeStoreDisplay.UpdateStoreDisplay(playerCurrency);
                 upgradeStoreDisplay.UpdateCurrency(playerCurrency);
             }
             else
                 Debug.Log("Not enough scrap");
         }
         else
+        {
             Debug.Log("No available slot for this item");
+            DisplayError(item);
+        }
     }
 
     public void SellItem(UpgradeItemDisplay item)
@@ -128,6 +136,10 @@ public class UpgradeManager : MonoBehaviour
                     }
                 }
                 break;
+            case UpgradeType.Magnet:
+                if (magnetController.MagnetType == null)
+                    foundFreeSlot = true;
+                break;
         }
         return foundFreeSlot;
     }
@@ -141,6 +153,7 @@ public class UpgradeManager : MonoBehaviour
         {
             installedUpgrades.Add(weapon.WeaponType);
         }
+        installedUpgrades.Add(magnetController.MagnetType);
     }
 
     void GetRegionalAvailability()
@@ -168,6 +181,13 @@ public class UpgradeManager : MonoBehaviour
             }
         }
         foreach (ShieldUSO upgrade in shieldUpgrades)
+        {
+            if (upgrade.UpgradeFaction == faction || upgrade.UpgradeFaction == Faction.Default)
+            {
+                availableUpgrades.Add(upgrade);
+            }
+        }
+        foreach (MagnetUSO upgrade in magnetUpgrades)
         {
             if (upgrade.UpgradeFaction == faction || upgrade.UpgradeFaction == Faction.Default)
             {
@@ -204,6 +224,9 @@ public class UpgradeManager : MonoBehaviour
             case UpgradeType.Shield:
                 shieldController.RemoveComponent();
                 break;
+            case UpgradeType.Magnet:
+                magnetController.RemoveComponent();
+                break;
         }
     }
 
@@ -238,11 +261,36 @@ public class UpgradeManager : MonoBehaviour
                 shieldController.InstallComponent(shieldItem);
                 Debug.Log("Shield Item Installed");
                 break;
+            case UpgradeType.Magnet:
+                MagnetUSO magnetItem = magnetUpgrades.Where(obj => obj.name == upgradeItem.name).SingleOrDefault();
+                magnetController.InstallComponent(magnetItem);
+                Debug.Log("Magnet Item Installed");
+                break;
         }
+    }
+
+    public void BuyShipRepairs()
+    {
+
     }
 
     public void DisplayInfo(UpgradeItemDisplay upgradeDis)
     {
-        Debug.Log("Display Called");
+        upgradeStoreDisplay.OpenInfoDisplay(upgradeDis.GetUpgradeSO());
+    }
+
+    public void CloseDisplayInfo()
+    {
+        upgradeStoreDisplay.CloseInfoDisplay();
+    }
+
+    public void DisplayError(UpgradeItemDisplay upgradeDis)
+    {
+        upgradeStoreDisplay.OpenErrorDisplay(upgradeDis.GetUpgradeSO());
+    }
+
+    public void CloseDisplayError()
+    {
+        upgradeStoreDisplay.CloseErrorDisplay();
     }
 }

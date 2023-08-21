@@ -45,114 +45,114 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (player != null)
-        {
-            playerDirection = player.transform.position - transform.position;
-            if (playerDirection.magnitude < engagementDistance)
-            {
-                if (playerDirection.magnitude < weapon1Range && playerDirection.magnitude > standoffDistance)
-                    inWeapon1Range = true;
-                playerFound = true;
-                tooClose = false;
-            }
-            else if (playerDirection.magnitude < weapon1Range && playerDirection.magnitude <= standoffDistance)
-            {
-                if (playerDirection.magnitude < weapon1Range && playerDirection.magnitude > standoffDistance)
-                    inWeapon1Range = true;
-                playerFound = true;
-                tooClose = true;
-            }
-            else
-            {
-                playerFound = false;
-                inWeapon1Range = false;
-            }
-        }
-        else
-        {
-            playerFound = false;
-            inWeapon1Range = false;
-            tooClose = false;
-        }
-        if ((startPosition - transform.position).magnitude > patrolZoneRadius)
-            inPatrolZone = false;
-        else
-            inPatrolZone = true;
-        if (playerFound && !tooClose)
-        {
-            unitManager.SetMoveInput(playerDirection.normalized);
-            if (inWeapon1Range)
-            {
-                foreach (var controller in attachedControllers)
-                {
-                    if(controller != null)
-                        controller.StartRepeatFire();
-                }
-            }
-            else foreach (var controller in attachedControllers) controller.StopRepeatFire();
-        }
-        else if (playerFound && tooClose && !braking)
-        {
-            if (inWeapon1Range) foreach (var controller in attachedControllers) controller.StartRepeatFire();
-            else foreach (var controller in attachedControllers) controller.StopRepeatFire();
-            HitBrakes();
-        }
-        else
-        {
-            Patrol();
-        }
+    //void Update()
+    //{
+    //    if (player != null)
+    //    {
+    //        playerDirection = player.transform.position - transform.position;
+    //        if (playerDirection.magnitude < engagementDistance)
+    //        {
+    //            if (playerDirection.magnitude < weapon1Range && playerDirection.magnitude > standoffDistance)
+    //                inWeapon1Range = true;
+    //            playerFound = true;
+    //            tooClose = false;
+    //        }
+    //        else if (playerDirection.magnitude < weapon1Range && playerDirection.magnitude <= standoffDistance)
+    //        {
+    //            if (playerDirection.magnitude < weapon1Range && playerDirection.magnitude > standoffDistance)
+    //                inWeapon1Range = true;
+    //            playerFound = true;
+    //            tooClose = true;
+    //        }
+    //        else
+    //        {
+    //            playerFound = false;
+    //            inWeapon1Range = false;
+    //        }
+    //    }
+    //    else
+    //    {
+    //        playerFound = false;
+    //        inWeapon1Range = false;
+    //        tooClose = false;
+    //    }
+    //    if ((startPosition - transform.position).magnitude > patrolZoneRadius)
+    //        inPatrolZone = false;
+    //    else
+    //        inPatrolZone = true;
+    //    if (playerFound && !tooClose)
+    //    {
+    //        unitManager.SetMoveInput(playerDirection.normalized);
+    //        if (inWeapon1Range)
+    //        {
+    //            foreach (var controller in attachedControllers)
+    //            {
+    //                if(controller != null)
+    //                    controller.StartRepeatFire();
+    //            }
+    //        }
+    //        else foreach (var controller in attachedControllers) controller.StopRepeatFire();
+    //    }
+    //    else if (playerFound && tooClose && !braking)
+    //    {
+    //        if (inWeapon1Range) foreach (var controller in attachedControllers) controller.StartRepeatFire();
+    //        else foreach (var controller in attachedControllers) controller.StopRepeatFire();
+    //        HitBrakes();
+    //    }
+    //    else
+    //    {
+    //        Patrol();
+    //    }
 
-        if (!isInArena)
-            PushIntoArena();
-    }
+    //    if (!isInArena)
+    //        PushIntoArena();
+    //}
 
-    private void HitBrakes()
-    {
-        braking = true;
-        if (enemyRB.velocity.magnitude > .1f)
-        {
-            unitManager.SetMoveInput(-enemyRB.velocity.normalized);
-        }
-        else
-        {
-            braking = false;
-        }
-    }
+    //private void HitBrakes()
+    //{
+    //    braking = true;
+    //    if (enemyRB.velocity.magnitude > .1f)
+    //    {
+    //        unitManager.SetMoveInput(-enemyRB.velocity.normalized);
+    //    }
+    //    else
+    //    {
+    //        braking = false;
+    //    }
+    //}
 
-    void PushIntoArena()
-    {
-        unitManager.SetMoveInput(transform.position.normalized * -2);
-    }
+    //void PushIntoArena()
+    //{
+    //    unitManager.SetMoveInput(transform.position.normalized * -2);
+    //}
 
-    void Patrol()
-    {
-        if (inPatrolZone)
-        {
-            if (enemyRB.velocity.magnitude < maxSpeed && !braking)
-            {
-                Vector2 OrthoganalClockwise = new(transform.position.y, -transform.position.x);
-                unitManager.SetMoveInput(-OrthoganalClockwise.normalized);
-            }
-            else
-            {
-                HitBrakes();
-            }
-        }
-        else
-        {
-            if (enemyRB.velocity.magnitude < maxSpeed / 2 && !braking)
-            {
-                Vector2 zoneDirection = startPosition - transform.position;
-                unitManager.SetMoveInput(-zoneDirection.normalized);
-            }
-            else
-            {
-                HitBrakes();
-            }
-        }
-    }
+    //void Patrol()
+    //{
+    //    if (inPatrolZone)
+    //    {
+    //        if (enemyRB.velocity.magnitude < maxSpeed && !braking)
+    //        {
+    //            Vector2 OrthoganalClockwise = new(transform.position.y, -transform.position.x);
+    //            unitManager.SetMoveInput(-OrthoganalClockwise.normalized);
+    //        }
+    //        else
+    //        {
+    //            HitBrakes();
+    //        }
+    //    }
+    //    else
+    //    {
+    //        if (enemyRB.velocity.magnitude < maxSpeed / 2 && !braking)
+    //        {
+    //            Vector2 zoneDirection = startPosition - transform.position;
+    //            unitManager.SetMoveInput(-zoneDirection.normalized);
+    //        }
+    //        else
+    //        {
+    //            HitBrakes();
+    //        }
+    //    }
+    //}
 
     public void LeftArena()
     {

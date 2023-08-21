@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7544a98fcde2e3842bd16864e1226b13, type: 3}
   m_Name: Power_MKI
   m_EditorClassIdentifier: 
-  upgradeName: Fusion Reactor
-  description: Stable and sensible, fusion power is a standard for space faring vessels.
-    It has a modest storage capacity, but it recharges faster then most basic equipment
-    can drain it.
+  upgradeName: Fission Reactor
+  description: Stable and sensible, fission power is a standard for space faring
+    vessels. It has a modest storage capacity, but it recharges faster then most
+    basic equipment can drain it.
   level: 1
   buyCost: 10
   sellCost: 5

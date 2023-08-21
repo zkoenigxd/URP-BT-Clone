@@ -1,33 +1,34 @@
 {
   "project_info": {
-    "project_number": "358542503850",
-    "project_id": "the-last-admiral",
-    "storage_bucket": "the-last-admiral.appspot.com"
+    "project_number": "273560980525",
+    "firebase_url": "https://stick-to-your-guns-default-rtdb.firebaseio.com",
+    "project_id": "stick-to-your-guns",
+    "storage_bucket": "stick-to-your-guns.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:358542503850:android:9bf25d65bc2543fda305d3",
+        "mobilesdk_app_id": "1:273560980525:android:fd0c64d35f0c3f09a3bca4",
         "android_client_info": {
-          "package_name": "com.CuilTheoryDevelopment.TheLastAdmiral"
+          "package_name": "com.CuilTheoryDevelopment.LeviathansWake"
         }
       },
       "oauth_client": [
         {
-          "client_id": "358542503850-vm4eve6tev7d0f60um7764q0smbaf470.apps.googleusercontent.com",
+          "client_id": "273560980525-2bvs2pscjt3v18jcsj5ru8e1ueldout9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAUPesJpu420qr1UDRnbMFVYli9qmc517o"
+          "current_key": "AIzaSyCbGWFyEsODQKp8OhoinNvuDqRXb-xw7R0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "358542503850-vm4eve6tev7d0f60um7764q0smbaf470.apps.googleusercontent.com",
+              "client_id": "273560980525-2bvs2pscjt3v18jcsj5ru8e1ueldout9.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

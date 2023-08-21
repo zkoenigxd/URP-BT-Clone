@@ -1,24 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StationController : MonoBehaviour
 {
-    [SerializeField] TMP_Text messageBox;
     [SerializeField] GameObject redArrowAnim;
     [SerializeField] GameObject greenArrowAnim;
-    [SerializeField] Button startUpgradeButton;
     UpgradeManager upgradeManager;
     UIManager UImanager;
+    Button startUpgradeButton;
+    TMP_Text messageBox;
     bool isSafe;
     bool hasEntered;
 
     private void Awake()
     {
+        messageBox = GameObject.Find("NPC Diologe").GetComponent<TMP_Text>();
+        startUpgradeButton = GameObject.Find("StartUpgrade").GetComponent<Button>();
         upgradeManager = FindAnyObjectByType<UpgradeManager>();
-        startUpgradeButton.gameObject.SetActive(false);
+        startUpgradeButton.enabled = false;
+        startUpgradeButton.transform.GetChild(0).gameObject.SetActive(false);
+        startUpgradeButton.GetComponent<Image>().enabled = false;
         messageBox.enabled = false;
         UImanager = FindObjectOfType<UIManager>();
         hasEntered = false;
@@ -33,7 +35,9 @@ public class StationController : MonoBehaviour
             hasEntered = true;
             if(isSafe)
             {
-                startUpgradeButton.gameObject.SetActive(true);
+                startUpgradeButton.enabled = true;
+                startUpgradeButton.GetComponent<Image>().enabled = true;
+                startUpgradeButton.transform.GetChild(0).gameObject.SetActive(true);
                 DisplayMissionCompleteMessage();
                 upgradeManager.PreDock();
             }
@@ -48,7 +52,9 @@ public class StationController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<Player>())
         {
-            startUpgradeButton.gameObject.SetActive(false);
+            startUpgradeButton.enabled = false;
+            startUpgradeButton.GetComponent<Image>().enabled = false;
+            startUpgradeButton.transform.GetChild(0).gameObject.SetActive(false);
             hasEntered = false;
             CloseMessage();
         }

@@ -28,6 +28,14 @@ public class EnemySpawner : MonoBehaviour
                 ) as GameObject;
             childObject.transform.parent = this.transform;
         }
+        for (int i = 0; i < 4; i++)
+        {
+            GameObject childObject = Instantiate(enemyPrefabs[0],
+                        spawnLocations[Random.Range(0, spawnLocations.Count)].position + new Vector3(Random.Range(-10, 10), Random.Range(-10, 10), 0), //Random position from randon waypoint
+                        transform.rotation
+                ) as GameObject;
+            childObject.transform.parent = this.transform;
+        }
         arenaManager.ListAllEnemies();
         arenaManager.CheckAllEnemiesDefeated();
     }

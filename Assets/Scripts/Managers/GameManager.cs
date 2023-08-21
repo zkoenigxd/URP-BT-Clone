@@ -2,6 +2,7 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
 using Firebase.Firestore;
+using Firebase.Database;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,13 +14,10 @@ public class GameManager : Singleton<GameManager>
 
     MainMenuScript _mainMenuScript;
     FirebaseAuth auth;
-    DocumentReference docRef;
-    FirebaseFirestore db;
+    DatabaseReference dataRef;
     Vector2 entryVector = Vector2.up;
-    Player player;
     UpgradeManager upgradeManager;
-
-    int myLevel = 0;
+    UserSaveData saveData;
 
     string currentUserID = null;
     string currentUser = "Error, user not set";
@@ -32,17 +30,17 @@ public class GameManager : Singleton<GameManager>
 
     public Vector2 EntryVector => entryVector;
     public bool EnteringNewArena => enteringNewArena;
+    public bool LoadComplete => loadComplete;
 
     protected override void OnAwake()
     {
         // Firebase Initializations
         auth = FirebaseAuth.DefaultInstance;
         Debug.Log(auth);
-        db = FirebaseFirestore.DefaultInstance;
+        dataRef = FirebaseDatabase.DefaultInstance.RootReference;
         _mainMenuScript = FindObjectOfType<MainMenuScript>();
         if (currentUserID == null) { loggedIn = false; }
         else { loggedIn = true; }
-        player = FindObjectOfType<Player>();
     }
 
     public void ResetCurrency()
@@ -71,7 +69,9 @@ public class GameManager : Singleton<GameManager>
             FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
             AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
 
-            string message = "Login Failed!";
+            string message = errorCode.ToString();
+
+
             switch (errorCode)
             {
                 case AuthError.MissingEmail:
@@ -145,48 +145,38 @@ public class GameManager : Singleton<GameManager>
 
     async public void AddData()
     {
+        saveData = new UserSaveData(currentUser);
         Debug.Log(currencyCollected);
-        DocumentReference docRef = db.Collection("TestUnity").Document(currentUserID);
-        Dictionary<string, object> stats = new ()
+        string json = JsonUtility.ToJson(saveData);
+        await dataRef.Child("users").Child(currentUserID).SetRawJsonValueAsync(json).ContinueWithOnMainThread(task =>
         {
-            { "Name", currentUser },
-            { "Scrap Collected", currencyCollected },
-            { "Ship Class", myLevel }
-        };
-        await docRef.SetAsync(stats).ContinueWithOnMainThread(task => { Debug.Log(currentUser + "'s data added successfully " + currencyCollected); });
+            Debug.Log(currentUser + "'s data added successfully " + currencyCollected);
+        });
     }
 
     public void GetUserData()
     {
-        docRef = db.Collection("TestUnity").Document(currentUserID);
-        docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        dataRef.Child("users").Child(currentUserID).GetValueAsync().ContinueWithOnMainThread(task =>
         {
-            DocumentSnapshot snapshot = task.Result;
+            StartCoroutine(PlayLoadScreen());
             Debug.Log("entering snapshot");
-            if (snapshot.Exists)
+            if (task.IsFaulted)
             {
-                Dictionary<string, object> userInfo = snapshot.ToDictionary();
-
-                foreach (KeyValuePair<string, object> pair in userInfo)
-                {
-
-                    Debug.Log(pair.Key);
-                    if (pair.Key.ToString().Trim() == "Scrap Collected")
-                        currencyCollected = Convert.ToInt32(pair.Value);
-                    else if (pair.Key.ToString().Trim() == "Ship Class")
-                        myLevel = Convert.ToInt32(pair.Value);
-                    else if (pair.Key.ToString().Trim() == "Name")
-                        currentUser = Convert.ToString(pair.Value);
-                }
-                Debug.Log(currentUser);
+                Debug.Log(currentUser + " data retrieval fail with Exception: " + task.Exception);
+                // TODO: Handle exception on user side.
             }
-            else
+            else if (task.IsCompleted)
             {
-                Debug.Log("Error Getting Firestore Value");
+                DataSnapshot jsonReturn = task.Result;
+                string json = jsonReturn.GetRawJsonValue();
+                Debug.Log(json);
+                saveData = JsonUtility.FromJson<UserSaveData>(json);
+                Debug.Log(saveData.ToString());
             }
+            currentUser = saveData.userName;
             loadComplete = true;
+            Debug.Log("Load Complete");
         });
-        return;
     }
 
     public void ClearUserData()
@@ -194,7 +184,6 @@ public class GameManager : Singleton<GameManager>
         currentUser = " ";
         currentUserID = " ";
         currencyCollected = 0;
-        myLevel = 0;
         loggedIn = false;
     }
 
@@ -213,13 +202,71 @@ public class GameManager : Singleton<GameManager>
         StartCoroutine(LoginAsync());
     }
 
-    public void LoadNewGame()
+    public void LoadNewGame(string startinglevel)
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("LevelUtilities");
+        SceneManager.LoadScene(startinglevel, LoadSceneMode.Additive);
     }
 
     public void LoadMenu()
     {
         SceneManager.LoadScene(0);
     }
+
+
+    public bool IsSectorUnlocked(int ID)
+    {
+        return saveData.sectorUnlockedMatrix[ID];
+    }
+
+    public bool IsSectorDiscovered(int ID)
+    {
+        return saveData.sectorFoundMatrix[ID];
+    }
+
+
+    public class UserSaveData
+    {
+        public string userName;
+        public string shipClass;
+        public int shipLevel;
+        public bool shipHasHullUpgrade;
+        public int scrapInInventory;
+        public bool[] sectorFoundMatrix;
+        public bool[] sectorUnlockedMatrix;
+
+        public UserSaveData(string currentUserName)
+        {
+            userName = currentUserName;
+            shipClass = "Destroyer";
+            sectorFoundMatrix = new bool[6];
+            sectorUnlockedMatrix = new bool[6];
+            sectorFoundMatrix[0] = true;
+            sectorFoundMatrix[1] = true;
+            sectorFoundMatrix[2] = true;
+            sectorUnlockedMatrix[0] = true;
+            sectorUnlockedMatrix[1] = true;
+        }
+
+        public UserSaveData(UserSaveData other)
+        {
+            if (other != null)
+            {
+                this.userName = other.userName;
+                this.shipClass = other.shipClass;
+                this.shipLevel = other.shipLevel;
+                this.shipHasHullUpgrade = other.shipHasHullUpgrade;
+                this.scrapInInventory = other.scrapInInventory;
+                this.sectorFoundMatrix = other.sectorFoundMatrix;
+                this.sectorUnlockedMatrix = other.sectorUnlockedMatrix;
+            }
+        }
+
+    }
+
+    IEnumerator PlayLoadScreen()
+    {
+        yield return null;
+    }
+
 }

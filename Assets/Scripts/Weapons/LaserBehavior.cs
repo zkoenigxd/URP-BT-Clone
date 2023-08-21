@@ -22,7 +22,7 @@ public class LaserBehavior : MonoBehaviour
         {
             if (hitObject.layer + layerOffset == gameObject.layer || hitObject.layer == 10 || hitObject.layer == 11)
                 return;
-            if (shield = hitObject.GetComponent<ShieldController>())
+            if (shield = hitObject.GetComponentInParent<ShieldController>())
             {
                 shield.WeakenSheild(damage);
             }

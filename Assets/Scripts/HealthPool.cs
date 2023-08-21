@@ -7,13 +7,16 @@ using UnityEngine.UI;
 public class HealthPool : MonoBehaviour
 {
     [SerializeField] int maxHealth;
-    float currentHealth;
+
     [SerializeField] AudioClip smallHitSound;
     [SerializeField] AudioClip bigHitSound;
     [SerializeField] AudioSource audioSource;
     [SerializeField] Slider healthBarSlider;
 
+    float currentHealth;
+
     public int MaxHealth => maxHealth;
+    public float CurrentHealth => currentHealth;
 
     private void Awake()
     {
@@ -25,8 +28,18 @@ public class HealthPool : MonoBehaviour
         UpdateHealthBar();
     }
 
+    public void RepairDamage(float repairAmount)
+    {
+        currentHealth = Mathf.Clamp(currentHealth + repairAmount, currentHealth, maxHealth);
+    }
+
     public void TakeDamage(float damageAmount)
     {
+        if (GetComponent<Player>() != null )
+        {
+            Handheld.Vibrate();
+            GetComponent<Player>().PlayDamageTakenAnim();
+        }
         currentHealth -= damageAmount;
         if (damageAmount < 5 && damageAmount >= 1)
             audioSource.clip = smallHitSound;
@@ -38,9 +51,9 @@ public class HealthPool : MonoBehaviour
         {
             if (GetComponent<DropController>() != null)
                 gameObject.GetComponent<DropController>().DropDefeatMaterial();
-            if (GetComponentInChildren<ExplosionController>() != null)
+            if (GetComponent<UnitManager2>() != null)
             {
-                GetComponentInChildren<ExplosionController>().StartExplosion();
+                GetComponent<UnitManager2>().Destroy();
             }
             else
                 Destroy(gameObject);

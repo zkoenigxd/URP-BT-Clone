@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8eb3d2fd9123a8941b1b36d993e872ba, type: 3}
   m_Name: Shield_MKII
   m_EditorClassIdentifier: 
-  upgradeName: Deflector Shield MKI
-  description: Placeholder Text
+  upgradeName: Deflector Shield MKII
+  description: Faster recharge, greater capacity.
   level: 1
   buyCost: 30
   sellCost: 10

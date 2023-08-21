@@ -1,5 +1,122 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &724223128
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 724223129}
+  - component: {fileID: 724223130}
+  - component: {fileID: 724223131}
+  m_Layer: 12
+  m_Name: Magnet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &724223129
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724223128}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 488643242381949612}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &724223130
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724223128}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 1
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.0001
+--- !u!250 &724223131
+PointEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724223128}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  m_ForceMagnitude: -10
+  m_ForceVariation: 0
+  m_DistanceScale: 0.5
+  m_ForceSource: 0
+  m_ForceTarget: 0
+  m_ForceMode: 1
+  m_Drag: 0
+  m_AngularDrag: 0
+--- !u!1 &1395378284
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1395378285}
+  - component: {fileID: 1395378286}
+  m_Layer: 6
+  m_Name: Shield
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1395378285
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395378284}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 488643242381949612}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &1395378286
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395378284}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.9
 --- !u!1 &488643242381949615
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,9 +127,9 @@ GameObject:
   m_Component:
   - component: {fileID: 488643242381949612}
   - component: {fileID: 488643242381949613}
-  - component: {fileID: 6788450360672445765}
   - component: {fileID: 946663153782226541}
   - component: {fileID: 3711069908441020643}
+  - component: {fileID: 5679614344702996760}
   m_Layer: 6
   m_Name: Ship
   m_TagString: Untagged
@@ -35,6 +152,8 @@ Transform:
   - {fileID: 3743186102219200433}
   - {fileID: 3743186101958526212}
   - {fileID: 488643242846757345}
+  - {fileID: 1395378285}
+  - {fileID: 724223129}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
@@ -52,22 +171,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   powerSlider: {fileID: 0}
   powerType: {fileID: 11400000, guid: e65404ac070341c41b24d5fa3634413d, type: 2}
---- !u!58 &6788450360672445765
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 488643242381949615}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 2.9
 --- !u!114 &946663153782226541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +187,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 260214903944044074}
   shieldSlider: {fileID: 0}
   beginChargeUISlider: {fileID: 0}
+  shieldCollider: {fileID: 1395378286}
 --- !u!114 &3711069908441020643
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,6 +202,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrapSlider: {fileID: 0}
   cargoType: {fileID: 11400000, guid: 7d926f92fa1dfbc40a4571ae13759204, type: 2}
+--- !u!114 &5679614344702996760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488643242381949615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d8fa8d5e7251cf4d8cea257ac803979, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magnetType: {fileID: 11400000, guid: a667efa81725b7142b4c5ba6b8ffaa6e, type: 2}
+  magnetCollider: {fileID: 724223130}
 --- !u!1 &488643242846757344
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,7 +1459,7 @@ PrefabInstance:
     - target: {fileID: 8343986615622823826, guid: 0c4966752d3057f4ca57cb7e6d0bb133, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: dd607069356a45b419f86289b57d19c2, type: 2}
+      objectReference: {fileID: 11400000, guid: c92afe9876e60224b88edcf99f2c9d70, type: 2}
     - target: {fileID: 8343986615622823826, guid: 0c4966752d3057f4ca57cb7e6d0bb133, type: 3}
       propertyPath: audioSource
       value: 
@@ -1476,7 +1594,7 @@ PrefabInstance:
     - target: {fileID: 8343986615622823826, guid: 0c4966752d3057f4ca57cb7e6d0bb133, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: dd607069356a45b419f86289b57d19c2, type: 2}
+      objectReference: {fileID: 11400000, guid: c92afe9876e60224b88edcf99f2c9d70, type: 2}
     - target: {fileID: 8343986615622823826, guid: 0c4966752d3057f4ca57cb7e6d0bb133, type: 3}
       propertyPath: audioSource
       value: 

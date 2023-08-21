@@ -333,8 +333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2a8ab5ba5ce68428372e7bb15a908f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitSpeed: 20
-  boostScalar: 0
   engineAnimations: {fileID: 6524284739695624182}
   engineSound: {fileID: 6524284738380016258}
 --- !u!82 &6524284738380016267
@@ -702,7 +700,7 @@ MonoBehaviour:
   collidesWith: -1
   wallAvoidForce: 1
   wallAvoidFalloff: 1
-  priority: 0.5
+  priority: 0.9
   debug: 0
 --- !u!114 &6524284738380016266
 MonoBehaviour:
@@ -1398,6 +1396,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6524284740169985263}
   - component: {fileID: 6524284740169985232}
+  - component: {fileID: 5701505690433123359}
   m_Layer: 7
   m_Name: Ship
   m_TagString: Untagged
@@ -1518,6 +1517,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5701505690433123359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6524284740169985233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecc6216a8ddd5ed48a458086b53595d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerSlider: {fileID: 0}
+  powerType: {fileID: 11400000, guid: 85351628782f94c48bccc19c0a975573, type: 2}
 --- !u!1 &7488111991398445686
 GameObject:
   m_ObjectHideFlags: 0
@@ -2193,7 +2206,7 @@ PrefabInstance:
     - target: {fileID: 1054800463931087048, guid: de6761df2359ed544b1442f69f3bdb2c, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: dd607069356a45b419f86289b57d19c2, type: 2}
+      objectReference: {fileID: 11400000, guid: d22bbaa0eb031394489a0552921f7ba0, type: 2}
     - target: {fileID: 1054800463931087048, guid: de6761df2359ed544b1442f69f3bdb2c, type: 3}
       propertyPath: audioSource
       value: 
@@ -2327,7 +2340,7 @@ PrefabInstance:
     - target: {fileID: 3479430133443397513, guid: d4f24bd46883daa4f90c37991dd227a0, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: 614c738893a63fe4fae4f6aacc40c925, type: 2}
+      objectReference: {fileID: 11400000, guid: d22bbaa0eb031394489a0552921f7ba0, type: 2}
     - target: {fileID: 3479430133443397513, guid: d4f24bd46883daa4f90c37991dd227a0, type: 3}
       propertyPath: audioSource
       value: 
@@ -3601,7 +3614,7 @@ PrefabInstance:
     - target: {fileID: 1054800463931087048, guid: de6761df2359ed544b1442f69f3bdb2c, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: dd607069356a45b419f86289b57d19c2, type: 2}
+      objectReference: {fileID: 11400000, guid: d22bbaa0eb031394489a0552921f7ba0, type: 2}
     - target: {fileID: 1054800463931087048, guid: de6761df2359ed544b1442f69f3bdb2c, type: 3}
       propertyPath: audioSource
       value: 
@@ -4360,7 +4373,7 @@ PrefabInstance:
     - target: {fileID: 1054800463931087048, guid: de6761df2359ed544b1442f69f3bdb2c, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: dd607069356a45b419f86289b57d19c2, type: 2}
+      objectReference: {fileID: 11400000, guid: d22bbaa0eb031394489a0552921f7ba0, type: 2}
     - target: {fileID: 1054800463931087048, guid: de6761df2359ed544b1442f69f3bdb2c, type: 3}
       propertyPath: audioSource
       value: 
@@ -5640,7 +5653,7 @@ PrefabInstance:
     - target: {fileID: 1054800463931087048, guid: de6761df2359ed544b1442f69f3bdb2c, type: 3}
       propertyPath: weaponType
       value: 
-      objectReference: {fileID: 11400000, guid: dd607069356a45b419f86289b57d19c2, type: 2}
+      objectReference: {fileID: 11400000, guid: d22bbaa0eb031394489a0552921f7ba0, type: 2}
     - target: {fileID: 1054800463931087048, guid: de6761df2359ed544b1442f69f3bdb2c, type: 3}
       propertyPath: audioSource
       value: 

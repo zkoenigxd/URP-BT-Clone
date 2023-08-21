@@ -9,9 +9,9 @@ public class ShieldController : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer;
     [SerializeField] Slider shieldSlider;
     [SerializeField] Slider beginChargeUISlider;
+    [SerializeField] Collider2D shieldCollider;
 
     PowerController powerController;
-    Collider2D shieldCollider;
     Color shieldColor;
     float shieldCapacity;
     float damageReduction;
@@ -37,7 +37,6 @@ public class ShieldController : MonoBehaviour
         currentShield = shieldCapacity;
 
         powerController = GetComponentInParent<PowerController>();
-        shieldCollider = GetComponent<Collider2D>();
 
         SetUpShieldBar();
         UpdateShieldVisuals();
@@ -60,7 +59,6 @@ public class ShieldController : MonoBehaviour
 
         SetUpShieldBar();
         UpdateShieldVisuals();
-        Debug.Log(shieldUSO.ToString() + " Charged to: "+ currentShield);
         beginChargeUISlider.value = beginChargePercent;
     }
 
@@ -89,12 +87,20 @@ public class ShieldController : MonoBehaviour
 
     public void WeakenSheild(float incomingDamage)
     {
+        if (GetComponentInParent<Player>() != null)
+        {
+            GetComponentInParent<Player>().PlayShieldHitAnim();
+        }
         currentShield -= incomingDamage;
         endDelay = false;
         StopAllCoroutines();
         StartCoroutine(DelayRecharge());
         if (currentShield <= 0)
         {
+            if (GetComponentInParent<Player>() != null)
+            {
+                GetComponentInParent<Player>().PlayShieldDestroyedAnim();
+            }
             shieldCollider.enabled = false;
             spriteRenderer.enabled = false;
         }

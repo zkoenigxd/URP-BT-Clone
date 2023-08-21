@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UpgradeType { Weapon, Cargo, Power, Shield }
+public enum UpgradeType { Weapon, Cargo, Power, Shield, Magnet }
 public abstract class UpgradeSO : ScriptableObject
 {
     [SerializeField] string upgradeName;
@@ -24,4 +24,6 @@ public abstract class UpgradeSO : ScriptableObject
     public string Name => upgradeName;
     public Sprite StoreIcon => storeIcon;
     public string Description => description;
+
+
 }

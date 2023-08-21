@@ -99,7 +99,7 @@
   </files>
   <settings>
     <setting name="androidAbis" value="armeabi-v7a" />
-    <setting name="bundleId" value="com.CuilTheoryDevelopment.TheLastAdmiral" />
+    <setting name="bundleId" value="com.CuilTheoryDevelopment.LeviathansWake" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradlePropertiesTemplateEnabled" value="False" />

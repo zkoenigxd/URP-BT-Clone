@@ -31,5 +31,9 @@ public class Scrap : MonoBehaviour
             if (collision.gameObject.GetComponentInChildren<CurrecyController>().CollectScrap(this, value))
                 Destroy(gameObject);
         }
+        //if (collision.gameObject.GetComponentInParent<MagnetController>() != null)
+        //{
+        //    Debug.Log("In magnet area");
+        //}
     }
 }
