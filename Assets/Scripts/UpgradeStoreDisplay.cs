@@ -34,7 +34,7 @@ public class UpgradeStoreDisplay : MonoBehaviour
     {
         foreach (UpgradeSO upgrade in upgrades)
         {
-            UpgradeItemDisplay displayItem = (UpgradeItemDisplay)Instantiate(upgradeDisplayPrefab);
+            UpgradeItemDisplay displayItem = Instantiate(upgradeDisplayPrefab);
             upgradeItemsInStore.Add(displayItem);
             displayItem.transform.SetParent(storeDisplayWindow, false);
             displayItem.SetUpBuyDisplayTile(upgrade);
@@ -91,7 +91,7 @@ public class UpgradeStoreDisplay : MonoBehaviour
         {
             foreach (UpgradeItemDisplay nullItem in upgradeItemsInstalled)
             {
-                if (nullItem.SlotType == installedUpgrade.UpgradeType && nullItem.GetUpgradeSO() == null)
+                if (nullItem.SlotType == installedUpgrade.GetUpgradeType() && nullItem.GetUpgradeSO() == null)
                 {
                     nullItem.UpdateSellDisplayTile(installedUpgrade);
                     break;
@@ -115,8 +115,8 @@ public class UpgradeStoreDisplay : MonoBehaviour
     public void OpenErrorDisplay(UpgradeSO upgrade)
     {
         errorDisplay.SetActive(true);
-        errorDisplayText.text = "No available " + upgrade.UpgradeType + " slot. To install a new module, you must first empty a " 
-                              + upgrade.UpgradeType + " slot by selling a " + upgrade.UpgradeType + " currently installed on your ship.";
+        errorDisplayText.text = "No available " + upgrade.GetUpgradeType() + " slot. To install a new module, you must first empty a " 
+                              + upgrade.GetUpgradeType() + " slot by selling a " + upgrade.GetUpgradeType() + " currently installed on your ship.";
     }
 
     public void CloseErrorDisplay()

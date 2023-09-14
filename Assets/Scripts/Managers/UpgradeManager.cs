@@ -78,7 +78,7 @@ public class UpgradeManager : MonoBehaviour
     public void TryBuyItem(UpgradeItemDisplay item)
     {
         UpgradeSO upgrade = item.GetUpgradeSO();
-        if (CheckForAvailableSlot(upgrade.UpgradeType))
+        if (CheckForAvailableSlot(upgrade.GetUpgradeType()))
         {
             if (playerCurrency >= (upgrade.BuyCost))
             {
@@ -198,7 +198,7 @@ public class UpgradeManager : MonoBehaviour
 
     void RemoveItem(UpgradeSO upgrade)
     {
-        switch (upgrade.UpgradeType)
+        switch (upgrade.GetUpgradeType())
         {
             case UpgradeType.Weapon:
                 WeaponUSO item = weaponUpgrades.Where(obj => obj.name == upgrade.name).SingleOrDefault();
@@ -232,7 +232,7 @@ public class UpgradeManager : MonoBehaviour
 
     void InstallItem(UpgradeSO upgradeItem)
     {
-        switch (upgradeItem.UpgradeType)
+        switch (upgradeItem.GetUpgradeType())
         {
             case UpgradeType.Weapon:
                 WeaponUSO weaponItem = weaponUpgrades.Where(obj => obj.name == upgradeItem.name).SingleOrDefault();

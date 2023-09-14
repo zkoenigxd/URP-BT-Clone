@@ -15,12 +15,6 @@ public class UpgradeItemDisplay : MonoBehaviour
     [SerializeField] Button infoButton;
     [SerializeField] UpgradeSO upgrade;
 
-    [SerializeField] Color shieldPanelColor;
-    [SerializeField] Color weaponPanelColor;
-    [SerializeField] Color powerPanelColor;
-    [SerializeField] Color cargoPanelColor;
-    [SerializeField] Color magnetPanelColor;
-
     UpgradeType slotType;
     Color panelColor;
 
@@ -34,25 +28,7 @@ public class UpgradeItemDisplay : MonoBehaviour
 
     public void SetUpBuyDisplayTile(UpgradeSO upgrade)
     {
-        switch (upgrade.UpgradeType)
-        {
-            case UpgradeType.Weapon:
-                panelColor = weaponPanelColor;
-                break;
-            case UpgradeType.Power:
-                panelColor = powerPanelColor;
-                break;
-            case UpgradeType.Cargo:
-                panelColor = cargoPanelColor;
-                break;
-            case UpgradeType.Shield:
-                panelColor = shieldPanelColor;
-                break;
-            case UpgradeType.Magnet:
-                panelColor = magnetPanelColor;
-                break;
-        }
-        panel.color = panelColor;
+        panel.color = upgrade.GetStoreColor();
         this.upgrade = upgrade;
         upgradeNameText.text = upgrade.Name;
         costText.text = "Cost: " + upgrade.BuyCost;
@@ -61,29 +37,8 @@ public class UpgradeItemDisplay : MonoBehaviour
 
     public void SetUpSellDisplayTile(UpgradeSO upgrade)
     {
-        switch (upgrade.UpgradeType)
-        {
-            case UpgradeType.Weapon:
-                panelColor = weaponPanelColor;
-                slotType = UpgradeType.Weapon;
-                break;
-            case UpgradeType.Power:
-                panelColor = powerPanelColor;
-                slotType = UpgradeType.Power;
-                break;
-            case UpgradeType.Cargo:
-                panelColor = cargoPanelColor;
-                slotType = UpgradeType.Cargo;
-                break;
-            case UpgradeType.Shield:
-                panelColor = shieldPanelColor;
-                slotType= UpgradeType.Shield;
-                break;
-            case UpgradeType.Magnet:
-                panelColor = magnetPanelColor;
-                slotType = UpgradeType.Magnet;
-                break;
-        }
+        panelColor = upgrade.GetStoreColor();
+        slotType = upgrade.GetUpgradeType();
         slotTypeText.text = slotType.ToString() + " Slot";
         panel.color = panelColor;
         this.upgrade = upgrade;

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/WeaponModule", fileName = "new WeaponModule")]
 public class WeaponUSO : UpgradeSO
 {
-    WeaponUSO()
-    { upgradeType = UpgradeType.Weapon; }
+    [SerializeField] Color storeDisplayColor = new Color(0.6981132f, 0.1953838f, 0.1953838f);
 
     [SerializeField] GameObject bulletPrefab;
     [SerializeField] float bulletSpeed;
@@ -35,4 +35,6 @@ public class WeaponUSO : UpgradeSO
     public float DeltaTimeStepRotation => deltaTimeStepRotation;
     public float Accuracy => accuracy;
 
+    public override UpgradeType GetUpgradeType() { return UpgradeType.Weapon; }
+    public override Color GetStoreColor() { return storeDisplayColor; }
 }

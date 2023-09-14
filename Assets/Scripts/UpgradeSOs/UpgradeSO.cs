@@ -13,11 +13,9 @@ public abstract class UpgradeSO : ScriptableObject
     [SerializeField] int sellCost;
     [SerializeField] Sprite storeIcon;
     [SerializeField] Faction faction;
-    protected UpgradeType upgradeType;
     bool unlocked, canAfford;
 
     public Faction UpgradeFaction => faction;
-    public UpgradeType UpgradeType => upgradeType;
     public int BuyCost => buyCost;
     public int SellCost => sellCost;
     public int Level => level;
@@ -25,5 +23,6 @@ public abstract class UpgradeSO : ScriptableObject
     public Sprite StoreIcon => storeIcon;
     public string Description => description;
 
-
+    public abstract UpgradeType GetUpgradeType();
+    public abstract Color GetStoreColor();
 }
