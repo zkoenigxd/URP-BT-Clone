@@ -25,10 +25,10 @@ public class Scrap : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponentInChildren<CurrecyController>() != null)
+        if (collision.gameObject.GetComponentInChildren<CargoController>() != null)
         {
             //Debug.Log("Found Currency Controller");
-            if (collision.gameObject.GetComponentInChildren<CurrecyController>().CollectScrap(this, value))
+            if (collision.gameObject.GetComponentInChildren<CargoController>().CollectScrap(this, value))
                 Destroy(gameObject);
         }
         //if (collision.gameObject.GetComponentInParent<MagnetController>() != null)
