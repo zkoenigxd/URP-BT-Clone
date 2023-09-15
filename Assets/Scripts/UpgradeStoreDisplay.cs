@@ -63,14 +63,22 @@ public class UpgradeStoreDisplay : MonoBehaviour
         }
     }
 
-    public void InitializeInstallsDisplay(List<UpgradeSO> upgrades)
+    public void InitializeInstallsDisplay(Controller[] shipSlots)
     {
-        foreach (UpgradeSO upgrade in upgrades)
+        foreach(Transform child in playerDisplayWindow.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        upgradeItemsInstalled.Clear();
+        foreach (Controller slot in shipSlots)
         {
             UpgradeItemDisplay displayItem = (UpgradeItemDisplay)Instantiate(installedUpgradePrefab);
             upgradeItemsInstalled.Add(displayItem);
             displayItem.transform.SetParent(playerDisplayWindow, false);
-            displayItem.SetUpSellDisplayTile(upgrade);
+            if(slot.GetUpgrade() != null)
+                displayItem.SetUpSellDisplayTile(slot.GetUpgrade());
+            else
+                displayItem.ClearSellDisplayTile();
         }
     }
 

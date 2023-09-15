@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PowerController : MonoBehaviour
+public class PowerController : Controller
 {
     [SerializeField] Slider powerSlider;
     [SerializeField] PowerUSO powerType;
@@ -27,9 +27,9 @@ public class PowerController : MonoBehaviour
         }
     }
 
-    public void InstallComponent(PowerUSO powerUSO)
+    public override void InstallComponent(UpgradeSO upgrade)
     {
-        powerType = powerUSO;
+        powerType = (PowerUSO)upgrade;
         capacity = powerType.Capacity;
         rechargeRate = powerType.RechargeRate;
         currentPower = capacity;
@@ -37,7 +37,7 @@ public class PowerController : MonoBehaviour
         UpdateVisuals();
     }
 
-    public void RemoveComponent()
+    public override void RemoveComponent()
     {
         powerType = null;
         capacity = 0;
@@ -45,6 +45,21 @@ public class PowerController : MonoBehaviour
         currentPower = 0;
         SetUpPowerBar();
         UpdateVisuals();
+    }
+
+    public override bool IsAvailable()
+    {
+        return powerType == null;
+    }
+
+    public override UpgradeSO GetUpgrade()
+    {
+        return powerType;
+    }
+
+    public override UpgradeType GetSlotType()
+    {
+        return UpgradeType.Power;
     }
 
     private void Update()

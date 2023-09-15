@@ -1,26 +1,14 @@
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class UpgradeManager : MonoBehaviour
 {
     [SerializeField] UpgradeStoreDisplay upgradeStoreDisplay;
 
-    [SerializeField] List<WeaponUSO> weaponUpgrades = new();
-    [SerializeField] List<ShieldUSO> shieldUpgrades = new();
-    [SerializeField] List<PowerUSO> powerUpgrades = new();
-    [SerializeField] List<CargoUSO> cargoUpgrades = new();
-    [SerializeField] List<MagnetUSO> magnetUpgrades = new();
-
+    [SerializeField] List<UpgradeSO> upgradePool;
     List<UpgradeSO> availableUpgrades = new();
-
-    WeaponController[] weaponControllers;
-    ShieldController shieldController;
-    CurrecyController cargoController;
-    PowerController powerController;
-    MagnetController magnetController;
-
-    List<UpgradeSO> installedUpgrades = new();
+    Controller[] slots;
 
     Faction faction;
     Player player;
@@ -33,33 +21,27 @@ public class UpgradeManager : MonoBehaviour
         player = FindObjectOfType<Player>();
         if (player == null)
             Debug.LogWarning("CouldNotFindPlayer");
-        cargoController = player.GetComponentInChildren<CurrecyController>();
-        powerController = player.GetComponentInChildren<PowerController>();
-        shieldController = player.GetComponentInChildren<ShieldController>();
-        weaponControllers = player.GetComponentsInChildren<WeaponController>();
-        magnetController = player.GetComponentInChildren<MagnetController>();
-        if (cargoController == null || powerController == null || shieldController == null || weaponControllers == null || magnetController == null)
-            Debug.LogWarning("Did not find some or all controllers");
-        RefreshCurrancy();
-        InitializePlayerInstalledUpgradesList();
-        InitializeUI();
+        slots = player.GetComponentsInChildren<Controller>();
+        foreach (Controller controller in slots)
+        {
+            Debug.Log(controller.name.ToString());
+        }
+        RefreshCurrency();
+        StartCoroutine(ArenaSearch());
     }
 
     public void PreDock()
     {
-        faction = GameObject.Find("Arena").GetComponentInChildren<ArenaManager>().ArenaFaction;
-        GetRegionalAvailability();
-        InitializeUI();
         upgradeStoreDisplay.UpdateCurrency(playerCurrency);
-        RefreshCurrancy();
+        RefreshCurrency();
         RefreshUI();
     }
 
     void InitializeUI()
     {
-        RefreshCurrancy();
+        RefreshCurrency();
         upgradeStoreDisplay.InitializeStoreDisplay(availableUpgrades, playerCurrency);
-        upgradeStoreDisplay.InitializeInstallsDisplay(installedUpgrades);
+        upgradeStoreDisplay.InitializeInstallsDisplay(slots);
     }
 
     void RefreshUI()
@@ -68,17 +50,24 @@ public class UpgradeManager : MonoBehaviour
         upgradeStoreDisplay.UpdateCurrency(playerCurrency);
     }
 
-    public void RefreshCurrancy()
+    public void RefreshCurrency()
     {
-        playerCurrency += cargoController.CurrentCurrency;
-        Debug.Log("Player deposited " + playerCurrency + " to station.");
-        cargoController.DepositCurrency();
+        foreach (Controller controller in slots)
+        {
+            if(controller is CargoController cargoBay)
+            {
+                playerCurrency += cargoBay.CurrentCurrency;
+                Debug.Log("Player deposited " + playerCurrency + " to station.");
+                cargoBay.DepositCurrency();
+            }
+
+        }
     }
 
     public void TryBuyItem(UpgradeItemDisplay item)
     {
         UpgradeSO upgrade = item.GetUpgradeSO();
-        if (CheckForAvailableSlot(upgrade.GetUpgradeType()))
+        if (CheckForAvailableSlot(upgrade))
         {
             if (playerCurrency >= (upgrade.BuyCost))
             {
@@ -109,164 +98,46 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
-    bool CheckForAvailableSlot(UpgradeType upgradeType)
+    Controller CheckForAvailableSlot(UpgradeSO upgrade)
     {
-        bool foundFreeSlot = false;
-        switch (upgradeType)
+        foreach (Controller controller in slots)
         {
-            case UpgradeType.Power:
-                if (powerController.PowerType == null)
-                    foundFreeSlot = true;
-                break;
-            case UpgradeType.Cargo:
-                if (cargoController.CargoType == null)
-                    foundFreeSlot = true;
-                break;
-            case UpgradeType.Shield:
-                if (shieldController.ShieldType == null)
-                    foundFreeSlot = true;
-                break;
-            case UpgradeType.Weapon:
-                foreach (WeaponController weapon in weaponControllers)
-                {
-                    if (weapon.WeaponType == null)
-                    {
-                        foundFreeSlot = true;
-                        break;
-                    }
-                }
-                break;
-            case UpgradeType.Magnet:
-                if (magnetController.MagnetType == null)
-                    foundFreeSlot = true;
-                break;
+            if (upgrade.GetUpgradeType() == controller.GetSlotType() && controller.IsAvailable())
+            {
+                return controller;
+            }
         }
-        return foundFreeSlot;
-    }
-
-    void InitializePlayerInstalledUpgradesList()
-    {
-        installedUpgrades.Add(powerController.PowerType);
-        installedUpgrades.Add(shieldController.ShieldType);
-        installedUpgrades.Add(cargoController.CargoType);
-        foreach (WeaponController weapon in weaponControllers)
-        {
-            installedUpgrades.Add(weapon.WeaponType);
-        }
-        installedUpgrades.Add(magnetController.MagnetType);
+        return null;
     }
 
     void GetRegionalAvailability()
     {
-        foreach (WeaponUSO upgrade in weaponUpgrades)
+        foreach (UpgradeSO upgrade in upgradePool)
         {
             if (upgrade.UpgradeFaction == faction || upgrade.UpgradeFaction == Faction.Default)
             {
                 availableUpgrades.Add(upgrade);
             }
 
-        }
-        foreach (CargoUSO upgrade in cargoUpgrades)
-        {
-            if (upgrade.UpgradeFaction == faction || upgrade.UpgradeFaction == Faction.Default)
-            {
-                availableUpgrades.Add(upgrade);
-            }
-        }
-        foreach (PowerUSO upgrade in powerUpgrades)
-        {
-            if (upgrade.UpgradeFaction == faction || upgrade.UpgradeFaction == Faction.Default)
-            {
-                availableUpgrades.Add(upgrade);
-            }
-        }
-        foreach (ShieldUSO upgrade in shieldUpgrades)
-        {
-            if (upgrade.UpgradeFaction == faction || upgrade.UpgradeFaction == Faction.Default)
-            {
-                availableUpgrades.Add(upgrade);
-            }
-        }
-        foreach (MagnetUSO upgrade in magnetUpgrades)
-        {
-            if (upgrade.UpgradeFaction == faction || upgrade.UpgradeFaction == Faction.Default)
-            {
-                availableUpgrades.Add(upgrade);
-            }
         }
     }
 
     void RemoveItem(UpgradeSO upgrade)
     {
-        switch (upgrade.GetUpgradeType())
+        foreach(Controller controller in slots)
         {
-            case UpgradeType.Weapon:
-                WeaponUSO item = weaponUpgrades.Where(obj => obj.name == upgrade.name).SingleOrDefault();
-                for (int i = 0; i < weaponControllers.Count(); i++)
-                {
-                    if (weaponControllers[i].WeaponType != null)
-                    {
-                        if (weaponControllers[i].WeaponType.name == item.name)
-                        {
-                            weaponControllers[i].RemoveComponent();
-                            Debug.Log("Removed weapon");
-                            break;
-                        }
-                    }
-                }
-                break;
-            case UpgradeType.Power:
-                powerController.RemoveComponent();
-                break;
-            case UpgradeType.Cargo:
-                cargoController.RemoveComponent();
-                break;
-            case UpgradeType.Shield:
-                shieldController.RemoveComponent();
-                break;
-            case UpgradeType.Magnet:
-                magnetController.RemoveComponent();
-                break;
+            if(controller.GetUpgrade() == upgrade)
+            {
+                controller.RemoveComponent();
+            }
         }
     }
 
     void InstallItem(UpgradeSO upgradeItem)
     {
-        switch (upgradeItem.GetUpgradeType())
-        {
-            case UpgradeType.Weapon:
-                WeaponUSO weaponItem = weaponUpgrades.Where(obj => obj.name == upgradeItem.name).SingleOrDefault();
-                for (int i = 0; i < weaponControllers.Count(); i++)
-                {
-                    if (weaponControllers[i].WeaponType == null)
-                    {
-                        weaponControllers[i].InstallComponent(weaponItem);
-                        Debug.Log("Weapon Item Installed");
-                        break;
-                    }
-                }
-                break;
-            case UpgradeType.Power:
-                PowerUSO powerItem = powerUpgrades.Where(obj => obj.name == upgradeItem.name).SingleOrDefault();
-                powerController.InstallComponent(powerItem);
-                Debug.Log("Power Item Installed");
-                break;
-            case UpgradeType.Cargo:
-                CargoUSO cargoItem = cargoUpgrades.Where(obj => obj.name == upgradeItem.name).SingleOrDefault();
-                cargoController.InstallComponent(cargoItem);
-                Debug.Log("Cargo Item Installed");
-                break;
-            case UpgradeType.Shield:
-                ShieldUSO shieldItem = shieldUpgrades.Where(obj => obj.name == upgradeItem.name).SingleOrDefault();
-                shieldController.InstallComponent(shieldItem);
-                Debug.Log("Shield Item Installed");
-                break;
-            case UpgradeType.Magnet:
-                MagnetUSO magnetItem = magnetUpgrades.Where(obj => obj.name == upgradeItem.name).SingleOrDefault();
-                magnetController.InstallComponent(magnetItem);
-                Debug.Log("Magnet Item Installed");
-                break;
-        }
+        Controller availableController = CheckForAvailableSlot(upgradeItem);    
+        if (availableController != null)
+            availableController.InstallComponent(upgradeItem);
     }
 
     public void BuyShipRepairs()
@@ -292,5 +163,13 @@ public class UpgradeManager : MonoBehaviour
     public void CloseDisplayError()
     {
         upgradeStoreDisplay.CloseErrorDisplay();
+    }
+
+    IEnumerator ArenaSearch()
+    {
+        yield return new WaitForSeconds(3);
+        faction = GameObject.Find("Arena").GetComponentInChildren<ArenaManager>().ArenaFaction;
+        GetRegionalAvailability();
+        InitializeUI();
     }
 }

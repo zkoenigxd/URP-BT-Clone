@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponController : MonoBehaviour
+public class WeaponController : Controller
 {
     const float TRACE_DELAY = 0.06f;
 
@@ -76,9 +76,9 @@ public class WeaponController : MonoBehaviour
         BaseStart();
     }
 
-    public void InstallComponent(WeaponUSO weaponUSO)
+    public override void InstallComponent(UpgradeSO upgrade)
     {
-        weaponType = weaponUSO;
+        weaponType = (WeaponUSO)upgrade;
         bulletPrefab = weaponType.BulletPrefab;
         bulletSpeed = weaponType.BulletSpeed;
         fireDelay = weaponType.FireDelay;
@@ -91,7 +91,7 @@ public class WeaponController : MonoBehaviour
         accuracy = weaponType.Accuracy;
     }
 
-    public void RemoveComponent()
+    public override void RemoveComponent()
     {
         weaponType = null;
         bulletPrefab = null;
@@ -104,6 +104,21 @@ public class WeaponController : MonoBehaviour
         deltaTimeStepRotation = 0;
         deltaAngle = 0;
         accuracy = 0;
+    }
+
+    public override bool IsAvailable()
+    {
+        return weaponType == null;
+    }
+
+    public override UpgradeSO GetUpgrade()
+    {
+        return weaponType;
+    }
+
+    public override UpgradeType GetSlotType()
+    {
+        return UpgradeType.Weapon;
     }
 
     public void SetTarget(Transform target)

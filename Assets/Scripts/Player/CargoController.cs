@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CurrecyController : MonoBehaviour
+public class CargoController : Controller
 {
     [SerializeField] Slider scrapSlider;
     [SerializeField] CargoUSO cargoType;
@@ -25,22 +25,37 @@ public class CurrecyController : MonoBehaviour
         UpdateVisuals();
     }
 
-    public void InstallComponent(CargoUSO cargoUSO)
+    public override void InstallComponent(UpgradeSO upgrade)
     {
-        cargoType = cargoUSO;
+        cargoType = (CargoUSO)upgrade;
         capacity = cargoType.CargoCapacity;
         scrapCollected = 0;
         SetUpScrapdBar();
         UpdateVisuals();
     }
 
-    public void RemoveComponent()
+    public override void RemoveComponent()
     {
         cargoType = null;
         capacity = 0;
         scrapCollected = 0;
         SetUpScrapdBar();
         UpdateVisuals();
+    }
+
+    public override UpgradeSO GetUpgrade()
+    {
+        return cargoType;
+    }
+
+    public override UpgradeType GetSlotType()
+    {
+        return UpgradeType.Cargo;
+    }
+
+    public override bool IsAvailable()
+    {
+        return cargoType == null;
     }
 
     public bool CollectScrap(Scrap scrap, int value)

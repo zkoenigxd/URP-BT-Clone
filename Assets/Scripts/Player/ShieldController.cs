@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShieldController : MonoBehaviour
+public class ShieldController : Controller
 {
     [SerializeField] ShieldUSO shieldType;
     [SerializeField] SpriteRenderer spriteRenderer;
@@ -44,9 +44,9 @@ public class ShieldController : MonoBehaviour
         beginChargeUISlider.value = beginChargePercent;
     }
 
-    public void InstallComponent(ShieldUSO shieldUSO)
+    public override void InstallComponent(UpgradeSO upgrade)
     {
-        shieldType = shieldUSO;
+        shieldType = (ShieldUSO)upgrade;
         shieldCapacity = shieldType.ShieldCapacity;
         damageReduction = shieldType.DamageReduction;
         rechargeRate = shieldType.RechargeRate;
@@ -62,7 +62,7 @@ public class ShieldController : MonoBehaviour
         beginChargeUISlider.value = beginChargePercent;
     }
 
-    public void RemoveComponent()
+    public override void RemoveComponent()
     {
         shieldType = null;
         shieldCapacity = 0;
@@ -77,6 +77,20 @@ public class ShieldController : MonoBehaviour
         SetUpShieldBar();
         UpdateShieldVisuals();
         beginChargeUISlider.value = beginChargePercent;
+    }
+
+    public override bool IsAvailable()
+    {
+        return shieldType == null;
+    }
+    public override UpgradeSO GetUpgrade()
+    {
+        return shieldType;
+    }
+
+    public override UpgradeType GetSlotType()
+    {
+        return UpgradeType.Shield;
     }
 
     private void Update()

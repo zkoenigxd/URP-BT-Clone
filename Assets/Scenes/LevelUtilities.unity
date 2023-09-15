@@ -5730,26 +5730,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeStoreDisplay: {fileID: 9060166382420386469}
-  weaponUpgrades:
+  upgradePool:
   - {fileID: 11400000, guid: c92afe9876e60224b88edcf99f2c9d70, type: 2}
   - {fileID: 11400000, guid: 1042ae36dc9b3904c96c39641c64c371, type: 2}
   - {fileID: 11400000, guid: 97f895be89ec12549a9bce129a0dc043, type: 2}
   - {fileID: 11400000, guid: d22bbaa0eb031394489a0552921f7ba0, type: 2}
   - {fileID: 11400000, guid: 3ab6a6e4b2e69d64d9d73c150f530aeb, type: 2}
-  shieldUpgrades:
   - {fileID: 11400000, guid: 1590a05f2d4d3af4aadfe2e9cc928328, type: 2}
   - {fileID: 11400000, guid: 144634e31e6ba714484ac04e68e7ce4a, type: 2}
   - {fileID: 11400000, guid: 00a370d5ee3c1a547bc7757c444e19f1, type: 2}
-  powerUpgrades:
   - {fileID: 11400000, guid: e65404ac070341c41b24d5fa3634413d, type: 2}
   - {fileID: 11400000, guid: 9377cb4c9bc4a244cab2566d3f5b0c53, type: 2}
   - {fileID: 11400000, guid: 85351628782f94c48bccc19c0a975573, type: 2}
   - {fileID: 11400000, guid: e022f596894664b42a4908b43f2e3c10, type: 2}
-  cargoUpgrades:
-  - {fileID: 11400000, guid: 7d926f92fa1dfbc40a4571ae13759204, type: 2}
-  - {fileID: 11400000, guid: 7e64f88499e0c244aa2fa3d0aba3a988, type: 2}
-  - {fileID: 11400000, guid: 8a475cdee8bf7764e874576729920259, type: 2}
-  magnetUpgrades:
   - {fileID: 11400000, guid: a667efa81725b7142b4c5ba6b8ffaa6e, type: 2}
   - {fileID: 11400000, guid: 9711ebd1cfb1f2b42be359bc4835a24a, type: 2}
   - {fileID: 11400000, guid: 2cf23fe30f1c5a24a804213791492c78, type: 2}
@@ -5757,6 +5750,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2178bbcfec96ee2439760b2b4896cdc6, type: 2}
   - {fileID: 11400000, guid: 27a41853babe1de4b96bd57de2b42a18, type: 2}
   - {fileID: 11400000, guid: 478c64a59cde3f346b64348e3db1e7ed, type: 2}
+  - {fileID: 11400000, guid: 7d926f92fa1dfbc40a4571ae13759204, type: 2}
+  - {fileID: 11400000, guid: 7e64f88499e0c244aa2fa3d0aba3a988, type: 2}
+  - {fileID: 11400000, guid: 8a475cdee8bf7764e874576729920259, type: 2}
 --- !u!1 &882217578
 GameObject:
   m_ObjectHideFlags: 0
