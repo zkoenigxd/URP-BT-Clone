@@ -45,7 +45,6 @@ public class UpgradeStoreDisplay : MonoBehaviour
             else
             {
                 displayItem.SetBuyButtonInactive();
-                Debug.Log("Player currecy was " + playerCurency);
             }
         }
     }

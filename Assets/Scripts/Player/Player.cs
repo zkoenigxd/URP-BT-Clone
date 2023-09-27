@@ -2,41 +2,54 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
 using System.Linq;
+using Pathfinding.RVO;
 
 public class Player : MonoBehaviour
 {
     GameManager gameManager;
-    WeaponController[] attachedControllers;
+    Controller[] attachedControllers;
+    WeaponController[] attachedWeaponControllers;
     UnitManager2 unitManager;
+    PlayerStats stats;
     JoyStickInput playerInputActions;
     Rigidbody2D playerRB;
     Vector2 moveInput;
     Vector2 fireInput;
     bool playerIsDead;
     float approxUnitSpeed;
+    RVOController rvo;
 
-    [SerializeField] Camera minimapCamera;
-    [SerializeField] float maxZoom;
-    [SerializeField] float minZoom;
     [SerializeField] GameObject fireDirection;
+    [SerializeField] Transform targetTransform;
     [SerializeField] GameObject shieldHitAnim;
     [SerializeField] GameObject shieldDesAnim;
     [SerializeField] GameObject damageTakenAnim;
+    [SerializeField] GameObject shipPrefab;
+    [SerializeField] Camera minimapCamera;
+    [SerializeField] float maxZoom;
+    [SerializeField] float minZoom;
     [SerializeField] float spawnDelay = .5f;
     [SerializeField] float speed = 150;
     [SerializeField] float boostScalar;
+
+    public Transform TargetTransform => targetTransform;
     public Rigidbody2D PlayerRB => playerRB;
     public Vector2 FireInput => fireInput;
     public Vector2 MoveInput => moveInput;
     public bool PlayerIsDead => playerIsDead;
+    public Controller[] AttachedControllers => attachedControllers;
 
     private void Awake()
     {
+        stats = GetComponent<PlayerStats>();
         gameManager = GameManager.Instance;
         playerIsDead = false;
-        attachedControllers = GetComponentsInChildren<WeaponController>();
+        Instantiate(shipPrefab, this.transform);
+        attachedControllers = shipPrefab.GetComponentsInChildren<Controller>();
         playerInputActions = new JoyStickInput();
         playerRB = GetComponent<Rigidbody2D>();
+        playerRB.mass = shipPrefab.GetComponent<ShipTraits>().ShipMass;
+        Debug.Log(playerRB.ToString());
         unitManager = GetComponent<UnitManager2>();
         playerRB.centerOfMass = Vector3.zero;
         approxUnitSpeed = ((speed / playerRB.drag) - Time.fixedDeltaTime * speed) / playerRB.mass;
@@ -45,17 +58,21 @@ public class Player : MonoBehaviour
         playerInputActions.Player.Shoot.canceled += Shoot_canceled;
         playerInputActions.Player.Move.performed += Move_performed;
         playerInputActions.Player.Shoot.performed += Shoot_performed;
+        rvo = GetComponentInChildren<RVOController>();
+        if (rvo != null)
+            Debug.Log("Successfully got RVO");
         Physics2D.IgnoreLayerCollision(6, 10);
-
+        ResetWeaponInput();
         if (gameManager.EnteringNewArena)
         {
             StartCoroutine(HoldThenBoost());
         }
+        stats.InitializeUI();
     }
 
     public void ResetWeaponInput()
     {
-        attachedControllers = GetComponentsInChildren<WeaponController>();
+        attachedWeaponControllers = GetComponentsInChildren<WeaponController>();
     }
 
     void Boost()
@@ -66,16 +83,16 @@ public class Player : MonoBehaviour
 
     private void Shoot_started(InputAction.CallbackContext obj)
     {
-            for (int i = 0; i < attachedControllers.Count(); ++i)
-                attachedControllers[i].StartRepeatFire();
+            for (int i = 0; i < attachedWeaponControllers.Count(); ++i)
+                attachedWeaponControllers[i].StartRepeatFire();
     }
 
     private void Shoot_performed(InputAction.CallbackContext context) { }
 
     private void Shoot_canceled(InputAction.CallbackContext obj)
     {
-        for (int i = 0; i < attachedControllers.Count(); ++i)
-            attachedControllers[i].StopRepeatFire();
+        for (int i = 0; i < attachedWeaponControllers.Count(); ++i)
+            attachedWeaponControllers[i].StopRepeatFire();
     }
 
     private void Move_performed(InputAction.CallbackContext context) { }
@@ -85,6 +102,7 @@ public class Player : MonoBehaviour
         TurnShip();
         Move();
         minimapCamera.orthographicSize = Mathf.Clamp((maxZoom - minZoom) * (playerRB.velocity.magnitude / approxUnitSpeed) + minZoom, minZoom, maxZoom);
+        rvo.velocity = playerRB.velocity;
     }
 
     private void Update()
@@ -143,5 +161,11 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(holdTime);
         activatedObject.SetActive(false);
+    }
+
+    public void SetShipPrefab(GameObject ship)
+    {
+        shipPrefab = ship;
+        attachedControllers = GetComponentsInChildren<WeaponController>();
     }
 }

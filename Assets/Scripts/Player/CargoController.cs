@@ -1,10 +1,10 @@
+using BehaviorDesigner.Runtime.Tasks.Unity.UnityGameObject;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class CargoController : Controller
 {
-    [SerializeField] Slider scrapSlider;
     [SerializeField] CargoUSO cargoType;
     int capacity;
     // condisder increasing the "inertia" of ships with increased cargo capacity
@@ -12,17 +12,18 @@ public class CargoController : Controller
     int scrapCollected;
     int rareScrapCollected;
     List<Scrap> rareScrapItems;
-
+    PlayerStats playerStats;
 
     public CargoUSO CargoType => cargoType;
     public int CurrentCurrency => scrapCollected;
 
     private void Awake()
     {
+        playerStats = GetComponentInParent<PlayerStats>();
         capacity = cargoType.CargoCapacity;
         scrapCollected = 0;
-        SetUpScrapdBar();
-        UpdateVisuals();
+        playerStats.AddCargo(capacity);
+        playerStats.UpdateCurrentCargo(scrapCollected);
     }
 
     public override void InstallComponent(UpgradeSO upgrade)
@@ -30,8 +31,7 @@ public class CargoController : Controller
         cargoType = (CargoUSO)upgrade;
         capacity = cargoType.CargoCapacity;
         scrapCollected = 0;
-        SetUpScrapdBar();
-        UpdateVisuals();
+        playerStats.AddCargo(capacity);
     }
 
     public override void RemoveComponent()
@@ -39,8 +39,7 @@ public class CargoController : Controller
         cargoType = null;
         capacity = 0;
         scrapCollected = 0;
-        SetUpScrapdBar();
-        UpdateVisuals();
+        playerStats.RemoveCargo(capacity);
     }
 
     public override UpgradeSO GetUpgrade()
@@ -65,7 +64,7 @@ public class CargoController : Controller
             if (scrapCollected + value > capacity - rareScrapCollected)
                 return false;
             scrapCollected += value;
-            UpdateVisuals();
+            playerStats.UpdateCurrentCargo(value);
             return true;
         }
         if (scrapCollected + rareScrapCollected + value > capacity)
@@ -74,24 +73,14 @@ public class CargoController : Controller
         }
         rareScrapItems.Add(scrap);
         rareScrapCollected += value;
-        UpdateVisuals();
+        playerStats.UpdateCurrentCargo(value);
         return true;
     }
 
     public void DepositCurrency()
     {
+        Debug.Log("Got this far");
+        playerStats.UpdateCurrentCargo(-scrapCollected);
         scrapCollected = 0;
-        UpdateVisuals();
-    }
-
-    void SetUpScrapdBar()
-    {
-        RectTransform rectTransform = scrapSlider.GetComponent<RectTransform>();
-        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 10 * capacity);
-    }
-
-    void UpdateVisuals()
-    {
-        scrapSlider.value = scrapCollected / ((float)capacity + .0000001f);
     }
 }

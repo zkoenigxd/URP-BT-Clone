@@ -61,12 +61,21 @@ public class WeaponController : Controller
         }
 
         powerController = GetComponentInParent<PowerController>();
-        Debug.Log("TraceTarget is: " + traceTarget.ToString());
+        if (powerController == null )
+        {
+            Debug.LogError("PowerController not found");
+        }
         if (traceTarget == null)
         {
-            Debug.Log("Loking for Player");
-            traceTarget = GameObject.Find("Player").transform;
-            Debug.Log("Target assigned as: " + traceTarget.gameObject.name);
+            if(GetComponentInParent<Player>() != null)
+                traceTarget = GetComponentInParent<Player>().TargetTransform;
+            else
+            {
+                //Debug.Log("Looking for Player");
+                traceTarget = GameObject.Find("Player").transform;
+                //Debug.Log("Target assigned as: " + traceTarget.gameObject.name);
+            }
+
         }
 
         if (GetComponentInParent<Player>())

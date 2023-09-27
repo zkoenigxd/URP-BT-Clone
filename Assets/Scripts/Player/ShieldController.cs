@@ -7,10 +7,11 @@ public class ShieldController : Controller
 {
     [SerializeField] ShieldUSO shieldType;
     [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] Slider shieldSlider;
-    [SerializeField] Slider beginChargeUISlider;
+    //[SerializeField] Slider shieldSlider;
+    //[SerializeField] Slider beginChargeUISlider;
     [SerializeField] Collider2D shieldCollider;
 
+    PlayerStats playerStats;
     PowerController powerController;
     Color shieldColor;
     float shieldCapacity;
@@ -26,6 +27,7 @@ public class ShieldController : Controller
 
     private void Awake()
     {
+        playerStats = GetComponentInParent<PlayerStats>();
         shieldCapacity = shieldType.ShieldCapacity;
         damageReduction = shieldType.DamageReduction;
         rechargeRate = shieldType.RechargeRate;
@@ -36,12 +38,11 @@ public class ShieldController : Controller
 
         currentShield = shieldCapacity;
 
-        powerController = GetComponentInParent<PowerController>();
 
-        SetUpShieldBar();
-        UpdateShieldVisuals();
-
-        beginChargeUISlider.value = beginChargePercent;
+        powerController = GetComponent<PowerController>();
+        playerStats.AddShield(shieldCapacity);
+        playerStats.UpdateCurrentShield(shieldCapacity);
+        //beginChargeUISlider.value = beginChargePercent;
     }
 
     public override void InstallComponent(UpgradeSO upgrade)
@@ -57,13 +58,13 @@ public class ShieldController : Controller
 
         currentShield = shieldCapacity;
 
-        SetUpShieldBar();
-        UpdateShieldVisuals();
-        beginChargeUISlider.value = beginChargePercent;
+        playerStats.AddShield(shieldCapacity);
+        //beginChargeUISlider.value = beginChargePercent;
     }
 
     public override void RemoveComponent()
     {
+        playerStats.RemoveShield(shieldCapacity);
         shieldType = null;
         shieldCapacity = 0;
         damageReduction = 0;
@@ -74,9 +75,8 @@ public class ShieldController : Controller
         shieldColor = Color.white;
 
         currentShield = shieldCapacity;
-        SetUpShieldBar();
-        UpdateShieldVisuals();
-        beginChargeUISlider.value = beginChargePercent;
+
+        //beginChargeUISlider.value = beginChargePercent;
     }
 
     public override bool IsAvailable()
@@ -118,7 +118,8 @@ public class ShieldController : Controller
             shieldCollider.enabled = false;
             spriteRenderer.enabled = false;
         }
-        UpdateShieldVisuals();
+        playerStats.UpdateCurrentShield(-incomingDamage);
+        spriteRenderer.color = new Color(shieldColor.r, shieldColor.g, shieldColor.b, currentShield / (shieldCapacity + .0000001f));
     }
 
     public float ReduceDamage(float incomingDamage)
@@ -129,24 +130,14 @@ public class ShieldController : Controller
 
     void Recharge()
     {
-        if(currentShield < shieldCapacity && powerController.ConsumePower(powerConsumptionRate * Time.deltaTime))
+        float recharge = rechargeRate * Time.deltaTime;
+        if (currentShield < shieldCapacity && powerController.ConsumePower(powerConsumptionRate * Time.deltaTime))
         {
-                currentShield += rechargeRate * Time.deltaTime;
+            currentShield += recharge;
         }
         shieldCollider.enabled = true;
         spriteRenderer.enabled = true;
-        UpdateShieldVisuals();
-    }
-
-    void SetUpShieldBar()
-    {
-        RectTransform rectTransform = shieldSlider.GetComponent<RectTransform>();
-        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 10 * (shieldCapacity+.0000001f));
-    }
-
-    void UpdateShieldVisuals()
-    {
-        shieldSlider.value = currentShield / (shieldCapacity + .0000001f);
+        playerStats.UpdateCurrentShield(recharge);
         spriteRenderer.color = new Color(shieldColor.r, shieldColor.g, shieldColor.b, currentShield / (shieldCapacity + .0000001f));
     }
 

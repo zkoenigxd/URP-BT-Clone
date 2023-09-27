@@ -30,7 +30,7 @@ public class StationController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<Player>() && !hasEntered)
+        if (collision.gameObject.GetComponentInParent<Player>() && !hasEntered)
         {
             hasEntered = true;
             if(isSafe)
@@ -50,7 +50,7 @@ public class StationController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.GetComponent<Player>())
+        if (collision.gameObject.GetComponentInParent<Player>())
         {
             startUpgradeButton.enabled = false;
             startUpgradeButton.GetComponent<Image>().enabled = false;

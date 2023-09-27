@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
     MainMenuScript _mainMenuScript;
     FirebaseAuth auth;
     DatabaseReference dataRef;
-    Vector2 entryVector = Vector2.up;
+    Vector2 entryVector = Vector2.right;
     UpgradeManager upgradeManager;
     UserSaveData saveData;
 

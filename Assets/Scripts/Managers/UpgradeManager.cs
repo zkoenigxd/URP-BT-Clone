@@ -5,28 +5,22 @@ using UnityEngine;
 public class UpgradeManager : MonoBehaviour
 {
     [SerializeField] UpgradeStoreDisplay upgradeStoreDisplay;
+    [SerializeField] Player player;
 
     [SerializeField] List<UpgradeSO> upgradePool;
     List<UpgradeSO> availableUpgrades = new();
     Controller[] slots;
+    CargoController cargoController;
 
     Faction faction;
-    Player player;
     int playerCurrency = 0;
 
     public int PlayerCurrency => playerCurrency;
 
     void Awake()
     {
-        player = FindObjectOfType<Player>();
         if (player == null)
             Debug.LogWarning("CouldNotFindPlayer");
-        slots = player.GetComponentsInChildren<Controller>();
-        foreach (Controller controller in slots)
-        {
-            Debug.Log(controller.name.ToString());
-        }
-        RefreshCurrency();
         StartCoroutine(ArenaSearch());
     }
 
@@ -50,18 +44,22 @@ public class UpgradeManager : MonoBehaviour
         upgradeStoreDisplay.UpdateCurrency(playerCurrency);
     }
 
-    public void RefreshCurrency()
+   void RefreshCurrency()
     {
-        foreach (Controller controller in slots)
-        {
-            if(controller is CargoController cargoBay)
-            {
-                playerCurrency += cargoBay.CurrentCurrency;
-                Debug.Log("Player deposited " + playerCurrency + " to station.");
-                cargoBay.DepositCurrency();
-            }
+        playerCurrency += cargoController.CurrentCurrency;
+        cargoController.DepositCurrency();
+        //foreach (Controller controller in slots)
+        //{
+        //    if(controller is CargoController cargoBay)
+        //    {
 
-        }
+        //        playerCurrency += cargoBay.CurrentCurrency;
+        //        Debug.Log("Player deposited " + playerCurrency + " to station.");
+
+        //        cargoBay.DepositCurrency();
+        //    }
+
+        //}
     }
 
     public void TryBuyItem(UpgradeItemDisplay item)
@@ -168,6 +166,13 @@ public class UpgradeManager : MonoBehaviour
     IEnumerator ArenaSearch()
     {
         yield return new WaitForSeconds(3);
+        slots = player.AttachedControllers;
+        cargoController = player.GetComponentInChildren<CargoController>();
+        Debug.LogWarning(slots.Length);
+        foreach (Controller controller in slots)
+        {
+            Debug.LogWarning(controller.ToString());
+        }
         faction = GameObject.Find("Arena").GetComponentInChildren<ArenaManager>().ArenaFaction;
         GetRegionalAvailability();
         InitializeUI();

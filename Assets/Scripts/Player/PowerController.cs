@@ -4,13 +4,14 @@ using UnityEngine.UI;
 
 public class PowerController : Controller
 {
-    [SerializeField] Slider powerSlider;
     [SerializeField] PowerUSO powerType;
 
     int capacity;
     float rechargeRate;
 
     float currentPower;
+    PlayerStats playerStats;
+    bool updatePlayerStats = false;
 
     public float ChargePercent => currentPower / (capacity + .0000001f);
     public PowerUSO PowerType => powerType;
@@ -20,10 +21,12 @@ public class PowerController : Controller
         capacity = powerType.Capacity;
         rechargeRate = powerType.RechargeRate;
         currentPower = capacity;
-        if (powerSlider != null)
+        if(GetComponentInParent<Player>())
         {
-            SetUpPowerBar();
-            UpdateVisuals();
+            updatePlayerStats = true;
+            playerStats = GetComponentInParent<PlayerStats>();
+            playerStats.AddPower(capacity);
+            playerStats.UpdateCurrentPower(capacity);
         }
     }
 
@@ -33,18 +36,16 @@ public class PowerController : Controller
         capacity = powerType.Capacity;
         rechargeRate = powerType.RechargeRate;
         currentPower = capacity;
-        SetUpPowerBar();
-        UpdateVisuals();
+        playerStats.AddPower(capacity);
     }
 
     public override void RemoveComponent()
     {
+        playerStats.RemovePower(capacity);
         powerType = null;
         capacity = 0;
         rechargeRate = 0;
         currentPower = 0;
-        SetUpPowerBar();
-        UpdateVisuals();
     }
 
     public override bool IsAvailable()
@@ -64,7 +65,7 @@ public class PowerController : Controller
 
     private void Update()
     {
-        if (capacity > 0)
+        if (capacity - currentPower > 0)
             Recharge();
     }
 
@@ -75,28 +76,20 @@ public class PowerController : Controller
             return false;
         }
         currentPower -= powerCost;
-        UpdateVisuals();
+        if(updatePlayerStats)
+            playerStats.UpdateCurrentPower(-powerCost);
         return true;
     }
 
     void Recharge()
     {
+        float recharge = rechargeRate * Time.deltaTime;
         if (currentPower < capacity)
-            currentPower += rechargeRate * Time.deltaTime;
-        UpdateVisuals();
-    }
-
-    void SetUpPowerBar()
-    {
-        RectTransform rectTransform = powerSlider.GetComponent<RectTransform>();
-        rectTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 10 * capacity);
-    }
-
-    void UpdateVisuals()
-    {
-        if (powerSlider != null)
         {
-            powerSlider.value = currentPower / ((float)capacity + .00000001f);
+            currentPower += recharge;
+            if(updatePlayerStats)
+                playerStats.UpdateCurrentPower(recharge);
         }
+
     }
 }
