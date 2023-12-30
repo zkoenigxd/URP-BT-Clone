@@ -3172,12 +3172,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46fb00c7e6ad9485282a146ad398a2a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  version: 1
   target: {fileID: 617778279}
   distance: 11
   height: 20
   damping: 5
+  enableRotation: 1
   smoothRotation: 1
-  followBehind: 1
   rotationDamping: 5
   staticOffset: 1
 --- !u!114 &214
@@ -3212,10 +3213,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   version: 1
   data:
-    dataString: UEsDBBQAAAgIAAAIIexa7YNXCQIAAOoDAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtU8GSojAU/BWL80qBgMIe17FmD6tuyRymZmsPT/KE1ITEDYk6Wv77JhAUa+YU0i/dyevXXLyiAgmFQrkBQnXjfR8FfvJt5BWCK6HlEk4LKYU0+MSiyFhOz9geCw1wBPYOW4Y/kZaVcqd6cM5ovb0p1nDKmdhbbhR0+wUp8RfyUlWW2YKUb7CkgrtbIoMhoUrIF8rQgeEkNbBywKtB4mA2QN4sMbWIbtDybFs7YA0aSCLDA3D1LGFf5VruoMClIFbXexIroTb4T1OJnj0LjXHGKM4FY5SgfBDqi0tsqvYKJfVD4QWlBMq/qkgcMgonv+nrT6iAMttq51Tzbr4vI+8ATNuXjpPR1TYM5bKr/flrt919OdT7m1fWQCkUKONpp3GyEzHoh1vPdm3ldkIWSH4IzUkzR27k7oxx4s+CaBKGjhn5SZIGceQExmHop0ESZ2n4Scq9xAnFgT9Ng14m9adhGAepk4nMfjaJ0lajqcTRervWilGOd7tsYWVGNhecY2E7G86lp7nZ3mkcQWKjcrMU1Zqzj9e3AQ25jewKDrXhzrVSlJd3bqkpeRyBlxFComwbAImz7TSIx9soypDALMkgIbNd7LVdUE4VBfbb6DPVe25+g0EsONSt4gYLE4A2mDZ9RMLxmZ5rMUgK5TuRFyY9fN1J3Lo2uQFmnCaL9nfJse3AUr3L1bv+B1BLAwQUAAAICAAACCHs5yp+JgABAADAAQAACwAkAGdyYXBoMS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BbY/LboMwEEV/BXndSkmBUnWdNsuipD8w2AOMYmzkRxpA/HvtJA2J1JXtI98zcydmtHbsPVFeyqeEWQTD229oFtTBaUPWgeIY4CoQSR05Gx5Twk5XNlzPMZ7JHG4GBg42up3xGIC3+LIp28ESj+EapI3YtcQPu9vn//AOBPmYWUcvcm8sHXExd2APl3WOID3eVtC9C6uO+KnNvgdjcWugb++GNJ7EY5AVGXCxyvKifuOYFvVzlRfr17SAHKCqRJays5oUOQJZogLp/srrHtWdXUF3VpaalLuMDlQY+NnS2Gm7FCBV6z03iOrrUWHRhCmhgvgQ5EINdI5UE6Nsmtn8C1BLAwQUAAAICAAACCHsb1B13pMAAAC5AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAU2OwQ6CMBBEf4X0LATslqX+gDdDvBoOW7aFHiiEookx/rs0evA2M28ymZd42DX6OYhTBkVVVM0hE8NKyxj35JjM3XPSN6GZWWpTEoM2dQm5kVJbJlSaFKMDsdcRqOcSFLqmtxJdbhRWtURSRMYwSNHtre252AtN9jvc0jY6H9iHobjanuJ2Tg/S3D9qZx9+pHt/AFBLAQItABQAAAgIAAAIIexa7YNXCQIAAOoDAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAIIeznKn4mAAEAAMABAAALACQAAAAAAAAAAAAAAFYCAABncmFwaDEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAAAIIexvUHXekwAAALkAAAAJACQAAAAAAAAAAAAAAKMDAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAMAAwAVAQAAgQQAAAAA
-    upgradeData: 
+    dataString: UEsDBBQAAAgIAAAIIexa7YNXCQIAAOoDAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtU8GSojAU/BWL80qBgMIe17FmD6tuyRymZmsPT/KE1ITEDYk6Wv77JhAUa+YU0i/dyevXXLyiAgmFQrkBQnXjfR8FfvJt5BWCK6HlEk4LKYU0+MSiyFhOz9geCw1wBPYOW4Y/kZaVcqd6cM5ovb0p1nDKmdhbbhR0+wUp8RfyUlWW2YKUb7CkgrtbIoMhoUrIF8rQgeEkNbBywKtB4mA2QN4sMbWIbtDybFs7YA0aSCLDA3D1LGFf5VruoMClIFbXexIroTb4T1OJnj0LjXHGKM4FY5SgfBDqi0tsqvYKJfVD4QWlBMq/qkgcMgonv+nrT6iAMttq51Tzbr4vI+8ATNuXjpPR1TYM5bKr/flrt919OdT7m1fWQCkUKONpp3GyEzHoh1vPdm3ldkIWSH4IzUkzR27k7oxx4s+CaBKGjhn5SZIGceQExmHop0ESZ2n4Scq9xAnFgT9Ng14m9adhGAepk4nMfjaJ0lajqcTRervWilGOd7tsYWVGNhecY2E7G86lp7nZ3mkcQWKjcrMU1Zqzj9e3AQ25jewKDrXhzrVSlJd3bqkpeRyBlxFComwbAImz7TSIx9soypDALMkgIbNd7LVdUE4VBfbb6DPVe25+g0EsONSt4gYLE4A2mDZ9RMLxmZ5rMUgK5TuRFyY9fN1J3Lo2uQFmnCaL9nfJse3AUr3L1bv+B1BLAwQUAAAICAAACCHsyWemTxEBAADjAQAACwAkAGdyYXBoMS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BbZDLbgIxDEV/ZZR1K0GBTtU1lFVbBP0Bk3hmLDLJKE4oD/HvdXgjdWXnyL6+N3sVvI/qvXDJ2qdCMULQzQ/UN9TCZkwcwWkU2BNiqaXI8tgXanNm23Pd5VocpAuw1cBZO4aEAhLjy3jWbJl0Xq7AcsaxIb2aX4f/w3MwlPJOP+uiToFpjTflFnh1srMGm/BqwXdRrO7ww4dFB4FxGqBr7o44iYscv7zBS8ZP6WVCZaZkpE5kHrVVOQRtesNRWb1pHJTV83JU9l8HJYwAlkszHKjjdXIUCewMHdh4+R/fobs3AO1RcubJxZM7oSbA75R2redbRnKVX+iA6L4fJRiDXJGUZmIoSlKMkVydV9X+oA5/UEsDBBQAAAgIAAAIIey5TJNqkgAAALkAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BTY7BDoIwEER/hfQsBOiWtf6AN0O8Gg5btoUeKISiiTH+uzR68DYzbzKZl3jYNfo5iFMGRV1U+pCJYaVljHtSJ3P3nPRNaGaW2pTEoE1TQm6k1JYJlSbF6EDsdQTquQSF7thbiS43CqtGIikiYxik6PbW9lzshSb7HW5pG50P7MNQXG1PcTunB2nuH7WzDz/SvT9QSwECLQAUAAAICAAACCHsWu2DVwkCAADqAwAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsyWemTxEBAADjAQAACwAkAAAAAAAAAAAAAABWAgAAZ3JhcGgxLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAACCHsuUyTapIAAAC5AAAACQAkAAAAAAAAAAAAAAC0AwAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAADAAMAFQEAAJEEAAAAAA==
     file_cachedStartup: {fileID: 0}
-    data_cachedStartup: 
     cacheStartup: 0
   showNavGraphs: 1
   showUnwalkableNodes: 1
@@ -3278,6 +3277,8 @@ MonoBehaviour:
   maxFrameTime: 1
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
+  navmeshUpdates:
+    updateInterval: 0
   euclideanEmbedding:
     mode: 0
     seed: 0
@@ -4096,9 +4097,9 @@ MonoBehaviour:
   enableRotation: 1
   autoRepath:
     mode: 1
-    interval: 0.5
+    period: 0.5
     sensitivity: 10
-    maximumInterval: 2
+    maximumPeriod: 2
     visualizeSensitivity: 0
   targetCompatibility: {fileID: 0}
   acceleration: 30
@@ -4871,50 +4872,6 @@ Transform:
   m_Father: {fileID: 434752738}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &954430316
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 954430317}
-  - component: {fileID: 954430318}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &954430317
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954430316}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6936107, y: -1.2111263, z: -9.860495}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &954430318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 954430316}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09480ce70711048b2b91de70c77b0ed8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targets: []
 --- !u!1 &999431234
 GameObject:
   m_ObjectHideFlags: 0

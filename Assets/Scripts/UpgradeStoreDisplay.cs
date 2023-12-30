@@ -6,8 +6,9 @@ using UnityEngine.UI;
 public class UpgradeStoreDisplay : MonoBehaviour
 {
     [SerializeField] TMP_Text currencyDisplay;
-    [SerializeField] Transform storeDisplayWindow;
-    [SerializeField] Transform playerDisplayWindow;
+    [SerializeField] Transform storeUpgradeDisplayWindow;
+    [SerializeField] Transform installedUpgradeDisplayWindow;
+    [SerializeField] Transform playerShipVisual;
     [SerializeField] UpgradeItemDisplay upgradeDisplayPrefab;
     [SerializeField] UpgradeItemDisplay installedUpgradePrefab;
     [SerializeField] Text currencyDisplayText;
@@ -36,7 +37,7 @@ public class UpgradeStoreDisplay : MonoBehaviour
         {
             UpgradeItemDisplay displayItem = Instantiate(upgradeDisplayPrefab);
             upgradeItemsInStore.Add(displayItem);
-            displayItem.transform.SetParent(storeDisplayWindow, false);
+            displayItem.transform.SetParent(storeUpgradeDisplayWindow, false);
             displayItem.SetUpBuyDisplayTile(upgrade);
             if (upgrade.BuyCost <= playerCurency)
             {
@@ -64,7 +65,7 @@ public class UpgradeStoreDisplay : MonoBehaviour
 
     public void InitializeInstallsDisplay(Controller[] shipSlots)
     {
-        foreach(Transform child in playerDisplayWindow.transform)
+        foreach(Transform child in installedUpgradeDisplayWindow.transform)
         {
             Destroy(child.gameObject);
         }
@@ -73,7 +74,7 @@ public class UpgradeStoreDisplay : MonoBehaviour
         {
             UpgradeItemDisplay displayItem = (UpgradeItemDisplay)Instantiate(installedUpgradePrefab);
             upgradeItemsInstalled.Add(displayItem);
-            displayItem.transform.SetParent(playerDisplayWindow, false);
+            displayItem.transform.SetParent(installedUpgradeDisplayWindow, false);
             if(slot.GetUpgrade() != null)
                 displayItem.SetUpSellDisplayTile(slot.GetUpgrade());
             else
@@ -105,6 +106,11 @@ public class UpgradeStoreDisplay : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void UpdatePlayerShipDisplay()
+    {
+       
     }
 
     public void OpenInfoDisplay(UpgradeSO upgrade)

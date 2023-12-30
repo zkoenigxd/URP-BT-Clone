@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tools {
-    public static bool TraceTarget(Transform workObject, Vector3 targetPos, float deltaAngle, bool onlyOneStepRotation = false)
+public class Tools
+{
+    public static bool TraceTarget(Transform workObject, Vector3 targetPos, float deltaAngle, bool rotationLimit)
     {
         if (workObject == null)
             return false;
@@ -19,19 +20,26 @@ public class Tools {
         }
         float targetAngle = Mathf.Round(angle / (float)deltaAngle) * (float)deltaAngle;
 
-        if (onlyOneStepRotation)
-        {
-            float currAngle = workObject.rotation.eulerAngles.z;
 
+        float currAngle = workObject.rotation.eulerAngles.z;
+
+        if (rotationLimit)
+        {
+            if (Mathf.Abs(currAngle - targetAngle) > deltaAngle)
+            {
+                targetAngle = currAngle + GetStepDirection(currAngle, targetAngle, 0) * deltaAngle;
+                workObject.rotation = Quaternion.Euler(0.0f, 0.0f, targetAngle);
+                return true;
+            }
+        }
+        else
+        {
             if (Mathf.Abs(currAngle - targetAngle) > deltaAngle)
             {
                 targetAngle = currAngle + GetStepDirection(currAngle, targetAngle) * deltaAngle;
                 workObject.rotation = Quaternion.Euler(0.0f, 0.0f, targetAngle);
                 return true;
             }
-        } else
-        {
-            workObject.rotation = Quaternion.Euler(0.0f, 0.0f, targetAngle);
         }
         return false;
     }
@@ -48,12 +56,21 @@ public class Tools {
                 return 1.0f;
             else
                 return -1.0f;
-        } else 
+        }
+        else
         {
             if (targetAngle >= currAngle || targetAngle < oppositeAngle)
                 return 1.0f;
             else
                 return -1.0f;
         }
+    }
+
+    private static float GetStepDirection(float currAngle, float targetAngle, int limitLocation)
+    {
+        if (targetAngle >= currAngle)
+            return 1.0f;
+        else
+            return -1.0f;
     }
 }

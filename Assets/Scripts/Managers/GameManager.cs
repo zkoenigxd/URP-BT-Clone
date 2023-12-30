@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
     public bool loggedIn;
 
     int currencyCollected = 0;
+    static int portalPosition = 0;
 
     public Vector2 EntryVector => entryVector;
     public bool EnteringNewArena => enteringNewArena;
@@ -213,6 +214,15 @@ public class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(0);
     }
 
+    public static void SetPortalPosition(int scene)
+    {
+        portalPosition = scene;
+    }
+
+    public static int GetPortalPosition()
+    {
+        return portalPosition;
+    }
 
     public bool IsSectorUnlocked(int ID)
     {

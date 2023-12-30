@@ -11,7 +11,6 @@ public class WeaponBigCannonController : WeaponController
     // Start is called before the first frame update
     void Start()
     {
-        BaseStart();
         animator = GetComponent<Animator>();
     }
 

@@ -4,14 +4,13 @@ using UnityEngine;
 
 public class WeaponController : Controller
 {
-    const float TRACE_DELAY = 0.06f;
-
     [SerializeField] WeaponUSO weaponType;
     [Tooltip("Should bullets appear one after another or all at once. Use for turret.")]
     [SerializeField] bool fireInSequence;
-    [Tooltip("Lest of empty child GameObjects in the weapon where bullet will appear")]
+    [Tooltip("List of empty child GameObjects in the weapon where bullet will appear")]
     [SerializeField] Transform[] bulletStartPoses;
     [SerializeField] Transform traceTarget = null;
+    
 
     [Space(20)]
     [SerializeField] AudioSource audioSource;
@@ -21,15 +20,13 @@ public class WeaponController : Controller
 
     float bulletSpeed;
     float accuracy;
+    float range;
     float fireDelay;
     float powerCost;
     float targetConeAngle = 30;
-    float deltaTimeStepRotation;
-    float deltaAngle;
-    float lastTimeRotated = 0.0f;
 
-    bool tracingEnable = true;
-    bool oneStepRotation = false;
+
+
     protected bool repeatFire = false;
 
     Coroutine repeatFireC;
@@ -37,12 +34,7 @@ public class WeaponController : Controller
     GameObject bulletPrefab;
 
     public WeaponUSO WeaponType => weaponType;
-
-    protected void BaseStart()
-    {
-        if (tracingEnable)
-            StartCoroutine(TraceTarget());
-    }
+    
 
     private void Awake()
     {
@@ -53,11 +45,8 @@ public class WeaponController : Controller
             fireDelay = weaponType.FireDelay;
             powerCost = weaponType.PowerCost;
             targetConeAngle = weaponType.TargetConeAngle;
-            tracingEnable = weaponType.TracingEnable;
-            oneStepRotation = weaponType.OneStepRotation;
-            deltaTimeStepRotation = weaponType.DeltaTimeStepRotation;
-            deltaAngle = weaponType.DeltaAngle;
             accuracy = weaponType.Accuracy;
+            range = weaponType.Range;
         }
 
         powerController = GetComponentInParent<PowerController>();
@@ -70,19 +59,17 @@ public class WeaponController : Controller
             if(GetComponentInParent<Player>() != null)
                 traceTarget = GetComponentInParent<Player>().TargetTransform;
             else
-            {
-                //Debug.Log("Looking for Player");
                 traceTarget = GameObject.Find("Player").transform;
-                //Debug.Log("Target assigned as: " + traceTarget.gameObject.name);
-            }
-
         }
 
         if (GetComponentInParent<Player>())
+        {
             layer = 10;
+        }
         if (GetComponentInParent<EnemyBrain>())
+        {
             layer = 11;
-        BaseStart();
+        }
     }
 
     public override void InstallComponent(UpgradeSO upgrade)
@@ -93,10 +80,6 @@ public class WeaponController : Controller
         fireDelay = weaponType.FireDelay;
         powerCost = weaponType.PowerCost;
         targetConeAngle = weaponType.TargetConeAngle;
-        tracingEnable = weaponType.TracingEnable;
-        oneStepRotation = weaponType.OneStepRotation;
-        deltaTimeStepRotation = weaponType.DeltaTimeStepRotation;
-        deltaAngle = weaponType.DeltaAngle;
         accuracy = weaponType.Accuracy;
     }
 
@@ -108,10 +91,6 @@ public class WeaponController : Controller
         fireDelay = 0;
         powerCost = 0;
         targetConeAngle = 0;
-        tracingEnable = false;
-        oneStepRotation = false;
-        deltaTimeStepRotation = 0;
-        deltaAngle = 0;
         accuracy = 0;
     }
 
@@ -135,25 +114,7 @@ public class WeaponController : Controller
         traceTarget = target;
     }
 
-    IEnumerator TraceTarget()
-    {
-        while(tracingEnable && traceTarget != null)
-        {
-            if (oneStepRotation)
-            {
-                if (Time.time - lastTimeRotated > deltaTimeStepRotation)
-                {
-                    if (Tools.TraceTarget(transform, traceTarget.position, deltaAngle, true))
-                        lastTimeRotated = Time.time;
-                }
-            }
-            else
-                Tools.TraceTarget(transform, traceTarget.position, deltaAngle);
-            yield return new WaitForSeconds(TRACE_DELAY);
-        }
-    }
-
-    public bool TargetInSight()
+    public bool TargetInEngagementArc()
     {
         if (traceTarget == null)
             return false;
@@ -167,11 +128,41 @@ public class WeaponController : Controller
             return true;
         return false;
     }
-    
+
+    public Vector3 GetNearestAngle(float angle)
+    {
+        //Debug.Log("Get Nearest Angle is operating on angle: " + angle);
+        if ((traceTarget.position.x - transform.TransformPoint(Vector3.zero).x) < 0)
+        {
+            angle = 360.0f - angle;
+        }
+        Quaternion q = Quaternion.AngleAxis(angle, Vector3.up);
+        Vector3 direction = q * Vector3.forward;
+
+        angle = Vector3.Angle(Vector3.up, direction);
+        if ((traceTarget.position.x - transform.TransformPoint(Vector3.zero).x) < 0)
+        {
+            angle = 360.0f - angle;
+        }
+        //Debug.Log("New angle is: " + angle);
+        return direction;
+    }
+
+    public bool TargetInEngagementRange()
+    {
+        if (traceTarget == null)
+            return false;
+        if (range == 0)
+            return true;
+        if ((transform.position - traceTarget.position).magnitude <= range)
+            return true;
+        return false;
+    }
+
     protected void OneShot(int index = 0)
     {
         Vector3 scatter = new (Random.Range(-accuracy / 2.0f, accuracy / 2.0f), Random.Range(-accuracy / 2.0f, accuracy / 2.0f), 0);
-        if (IfIndexGood(index) && TargetInSight())
+        if (IfIndexGood(index) && TargetInEngagementArc() && TargetInEngagementRange())
         {
             if (powerController.ConsumePower(powerCost))
             {

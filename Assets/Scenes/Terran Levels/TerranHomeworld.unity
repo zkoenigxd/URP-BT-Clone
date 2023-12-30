@@ -851,7 +851,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62835834}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.5, z: 0}
+  m_LocalPosition: {x: 0, y: 5, z: 0}
   m_LocalScale: {x: 3.39, y: 1.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1692,13 +1692,6 @@ MonoBehaviour:
   - {fileID: 803933612386986109, guid: e8d24701b4fcc234a84f1b7149cfba04, type: 3}
   spawnLocations:
   - {fileID: 218051394}
-  - {fileID: 1104640734}
-  - {fileID: 1513714822}
-  - {fileID: 1506683715}
-  - {fileID: 1690641427}
-  - {fileID: 187832576}
-  - {fileID: 368234719}
-  - {fileID: 1407044974}
   arenaManager: {fileID: 967388320}
 --- !u!1 &187832575
 GameObject:
@@ -5004,7 +4997,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -127.72, z: -50}
+  m_LocalPosition: {x: -141, y: -1.8, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8099,7 +8092,7 @@ GameObject:
   m_Component:
   - component: {fileID: 759157555}
   m_Layer: 5
-  m_Name: MissionSystem
+  m_Name: MissionSystem_and_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8363,7 +8356,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777528931}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -127.72, z: -50}
+  m_LocalPosition: {x: -141, y: -1.8, z: -50}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8537,7 +8530,7 @@ GameObject:
   - component: {fileID: 812571755}
   - component: {fileID: 812571754}
   m_Layer: 8
-  m_Name: Portal 1 (1)
+  m_Name: Portal To (Location 2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8573,8 +8566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeTillJump: 0
-  nextLevel:
-    m_Handle: 0
+  nextLevelScene: {fileID: 0}
   portalCollider: {fileID: 812571755}
   portalTravelDelay: 3
   startPosition: 0
@@ -9728,7 +9720,7 @@ GameObject:
   - component: {fileID: 876365401}
   - component: {fileID: 876365402}
   m_Layer: 5
-  m_Name: UpgradeSystem
+  m_Name: UpgradeSystem_and_UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9768,6 +9760,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   upgradeStoreDisplay: {fileID: 9060166382420386469}
+  player: {fileID: 1411747826}
   upgradePool:
   - {fileID: 11400000, guid: c92afe9876e60224b88edcf99f2c9d70, type: 2}
   - {fileID: 11400000, guid: 1042ae36dc9b3904c96c39641c64c371, type: 2}
@@ -12337,7 +12330,7 @@ GameObject:
   - component: {fileID: 1125443692}
   - component: {fileID: 1125443689}
   m_Layer: 5
-  m_Name: UpgradeMenu
+  m_Name: UpgradeUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12871,9 +12864,7 @@ MonoBehaviour:
   version: 1
   data:
     dataString: UEsDBBQAAAgIAACQn+vFk6r9vAIAALwFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFtVNtu2zAM/ZVAz0thO/e9bU6abkDboNnQh7kPss3EQmTJ0KVJWuTfS8lO7KYDAlg5JA95KFLvhAldQWakWiqW38scyPcecWfyrdca7+BAt1Ks2RucfZ5ZbgrnRL3PEzVMIh66MC1LMIplP8SWO+cAQSvYRqpykW8hltpohDeUa0CTksZFC4Tee+SAn/7MhRzxFE3c6Q1Ps6B3wmMGwoBqXc+O/eHNYBQNg8miH4ybkH54M5iMB6NgEC76YeTjrcg4LSvInZiWZhiciZDFOwoU2vgMXV7JOdNNlcQcK9+FmFbaokZ0yBlF1b40TItAAWxbGKehG/642WgwTeGKHudMYftqXvJT1j0tqd7Vtb1Sbl2maDT2VdWk91/s/dCbN0qWd+e8oddkCpbtnugxo9p0mt6F553SfYv2lO9oyuG5APEgl0pakaPRKOtCrYZo3v69SIsLyHYtXpd6Bdrq69UFl+vqnU5e/SHmrEyd6WZYA2sufcf9YIDCu/mFBfux0Q0Foq6Kvxr+0G13vhrDLVPaoKlRKVx5qbTKuZKF75lTY00slQAPN0VXICg3xxXSmOsrvLJ10l5ZbqnbpCZ5YzsvyFWIh1v/ILgyreS+vSwNv21ZrSQTZg1UZUWHTxdyfw+6eLSGMwGtImd4wCbGUoh6/PR/wtZWbWjWCTNwMFbBnBrq1wBrwinJu6HYUB8hLOduIL0KR/4PVbjfi2tyQTEv9zB5kMIv0KfvixuErWX55zEnk2g6TulsOB0O0jAdTPoZTMNoEqazaTCK0nRC/B4wgT2nfFU3rbkqnCDRahE48+fHrrdUtPKblyu6X7K3Unaun4mNXGcKQDzWDBexoDAJvhH5Imcocw3GMOFnj7wnhMtsB3lyIUp8YxcHo2jSsiSkYq/SOCQhsX/dEuLgy16tFLwy2LvkZ7ITOX0AUEsDBBQAAAgIAACQn+vQLpPebQAAAHgAAAAJACQAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0Bq1YqSy0qzszPU7JSMNEz0jO00FFQSi9KLMgoBooYgjilmSkgdrSSuZGFWVKipYmFiXGSYZKxuW5yqoWhkblhkqWFgalRUpK5UixQfUllQapfYm4qRE9AYklGWmZeSmZeup57UWaKO8hopdhaAFBLAQItABQAAAgIAACQn+vFk6r9vAIAALwFAAALACQAAAAAAAAAAAAAAAAAAABncmFwaDAuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAVBLAQItABQAAAgIAACQn+vQLpPebQAAAHgAAAAJACQAAAAAAAAAAAAAAAkDAABtZXRhLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwUGAAAAAAIAAgC4AAAAwQMAAAAA
-    upgradeData: 
     file_cachedStartup: {fileID: 0}
-    data_cachedStartup: 
     cacheStartup: 0
   showNavGraphs: 1
   showUnwalkableNodes: 1
@@ -12896,8 +12887,7 @@ MonoBehaviour:
     _ConnectionLowLerp: {r: 0, g: 1, b: 0, a: 0.5}
     _ConnectionHighLerp: {r: 1, g: 0, b: 0, a: 0.5}
     _MeshEdgeColor: {r: 0, g: 0, b: 0, a: 0.5}
-    _AreaColors:
-    - {r: 0, g: 0, b: 0, a: 0}
+    _AreaColors: []
   tagNames:
   - Basic Ground
   - 1
@@ -12937,6 +12927,8 @@ MonoBehaviour:
   maxFrameTime: 10
   batchGraphUpdates: 0
   graphUpdateBatchingInterval: 0.2
+  navmeshUpdates:
+    updateInterval: 0
   euclideanEmbedding:
     mode: 0
     seed: 0
@@ -15259,6 +15251,7 @@ GameObject:
   - component: {fileID: 1411747831}
   - component: {fileID: 1411747832}
   - component: {fileID: 1411747834}
+  - component: {fileID: 1411747835}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -15294,8 +15287,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411747815}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -127.72, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -141, y: -1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -15306,7 +15299,7 @@ Transform:
   - {fileID: 1007351979}
   m_Father: {fileID: 0}
   m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!114 &1411747822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15387,10 +15380,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireDirection: {fileID: 1854996016}
+  targetTransform: {fileID: 1893090908}
   shieldHitAnim: {fileID: 1588285271}
   shieldDesAnim: {fileID: 1521913844}
   damageTakenAnim: {fileID: 1809124142}
-  shipPrefab: {fileID: 0}
+  shipPrefab: {fileID: 5461553749112499952, guid: a23e4010e26a0db44b01589245554e7b, type: 3}
   minimapCamera: {fileID: 1107278821}
   maxZoom: 120
   minZoom: 60
@@ -15759,6 +15753,22 @@ MonoBehaviour:
   wallAvoidFalloff: 1
   priority: 0.5
   debug: 1
+--- !u!114 &1411747835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1411747815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4daf3b548859cc41acdd1aa68c915a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerSlider: {fileID: 364372063}
+  shieldSlider: {fileID: 1237604654}
+  cargoSlider: {fileID: 248744654}
+  healthSlider: {fileID: 913596401}
 --- !u!4 &1421116391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 442603000843860900, guid: 79bdbab65d9aa554897e33106eb84702, type: 3}
@@ -16779,7 +16789,7 @@ GameObject:
   - component: {fileID: 1511531285}
   - component: {fileID: 1511531284}
   m_Layer: 8
-  m_Name: Portal 1 (2)
+  m_Name: Portal To (Location 3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16815,8 +16825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeTillJump: 0
-  nextLevel:
-    m_Handle: 0
+  nextLevelScene: {fileID: 102900000, guid: 9d92d58eef80081448cf279ed5b72e05, type: 3}
   portalCollider: {fileID: 1511531285}
   portalTravelDelay: 3
   startPosition: 0
@@ -18423,7 +18432,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1693505229}
   m_Layer: 5
-  m_Name: ShipVisual
+  m_Name: ShipVisualAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20950,7 +20959,7 @@ GameObject:
   - component: {fileID: 1852584790}
   - component: {fileID: 1852584791}
   m_Layer: 8
-  m_Name: Portal 1
+  m_Name: Portal To (Location 1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21075,8 +21084,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeTillJump: 0
-  nextLevel:
-    m_Handle: 0
+  nextLevelScene: {fileID: 0}
   portalCollider: {fileID: 1852584790}
   portalTravelDelay: 3
   startPosition: 0
@@ -26517,8 +26525,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currencyDisplay: {fileID: 6777199875792087584}
-  storeDisplayWindow: {fileID: 1044131239}
-  playerDisplayWindow: {fileID: 407938947}
+  storeUpgradeDisplayWindow: {fileID: 1044131239}
+  installedUpgradeDisplayWindow: {fileID: 407938947}
+  playerShipVisual: {fileID: 1693505229}
   upgradeDisplayPrefab: {fileID: 8609116758005564743, guid: 691d3e221fbcbfa43ad360becf3e6220, type: 3}
   installedUpgradePrefab: {fileID: 901129371275455681, guid: 331a6e9a0e4cfde4a840ce15ab31701e, type: 3}
   currencyDisplayText: {fileID: 2979729500120716705}

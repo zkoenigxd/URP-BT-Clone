@@ -14,15 +14,15 @@ public class WeaponUSO : UpgradeSO
     [SerializeField] float powerCost;
     [SerializeField] float targetConeAngle = 30;
     [SerializeField] float accuracy;
+    [SerializeField] float range = 0;
+    [Tooltip("Starting from bow, going counterclockwise")]
+    [SerializeField] float minRotationAngle = 0;
+    [SerializeField] float maxRotationAngle = 0;
 
     [Space(20)]
     [SerializeField] bool tracingEnable = true;
     [Tooltip("Step angle of rotation when tracing is enable")]
-    [SerializeField] float deltaAngle;
-    [Tooltip("Set true to emulate slow rotation with constant speed. Good for big heavy cannon.")]
-    [SerializeField] bool oneStepRotation = false;
-    [Tooltip("Time between each rotate by 'Delta Angle'. Works when 'One Step Rotation' is true. For low level see comments in 'BaseStart' function.")]
-    [SerializeField] float deltaTimeStepRotation;
+    [SerializeField] float maxAngularSpeed;
 
     public GameObject BulletPrefab => bulletPrefab;
     public float BulletSpeed => bulletSpeed;
@@ -30,10 +30,11 @@ public class WeaponUSO : UpgradeSO
     public float PowerCost => powerCost;
     public float TargetConeAngle => targetConeAngle;
     public bool TracingEnable => tracingEnable;
-    public float DeltaAngle => deltaAngle;
-    public bool OneStepRotation => oneStepRotation;
-    public float DeltaTimeStepRotation => deltaTimeStepRotation;
+    public float MaxAngularSpeed => maxAngularSpeed;
     public float Accuracy => accuracy;
+    public float Range => range;
+    public float MinRotationAngle => minRotationAngle;
+    public float MaxRotationAngle => maxRotationAngle;
 
     public override UpgradeType GetUpgradeType() { return UpgradeType.Weapon; }
     public override Color GetStoreColor() { return storeDisplayColor; }

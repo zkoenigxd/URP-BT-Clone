@@ -7,7 +7,7 @@ public class PortalBehavior : MonoBehaviour
 {
     public float timeTillJump;
 
-    [SerializeField] Scene nextLevel;
+    [SerializeField] Object nextLevelScene;
     [SerializeField] Collider2D portalCollider;
     [SerializeField] float portalTravelDelay = 3;
     [SerializeField] int startPosition;
@@ -26,7 +26,7 @@ public class PortalBehavior : MonoBehaviour
         }
     }
 
-    private void OnTrigegrExit2D(Collision collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (portalCollider != null)
         {
@@ -39,9 +39,10 @@ public class PortalBehavior : MonoBehaviour
 
     void ActivatePortal()
     {
-        if (nextLevel != null)
+        if (nextLevelScene != null)
         {
-            SceneManager.LoadScene(nextLevel.name);
+            GameManager.SetPortalPosition(startPosition);
+            SceneManager.LoadScene(nextLevelScene.name);
         }
     }
 
