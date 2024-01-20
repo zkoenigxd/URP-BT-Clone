@@ -3,17 +3,18 @@ using UnityEngine.InputSystem;
 using System.Collections;
 using System.Linq;
 using Pathfinding.RVO;
+using System;
 
 public class Player : MonoBehaviour
 {
     GameManager gameManager;
     Controller[] attachedControllers;
     WeaponController[] attachedWeaponControllers;
-    UnitManager2 unitManager;
     PlayerStats stats;
-    JoyStickInput playerInputActions;
+    PlayerInputActions playerInputActions;
     Rigidbody2D playerRB;
-    Vector2 moveInput;
+    float turnInput;
+    Vector2 thrustInput;
     Vector2 fireInput;
     bool playerIsDead;
     float approxUnitSpeed;
@@ -30,12 +31,11 @@ public class Player : MonoBehaviour
     [SerializeField] float minZoom;
     [SerializeField] float spawnDelay = .5f;
     [SerializeField] float speed = 150;
+    [SerializeField] float turnSpeed = 5;
     [SerializeField] float boostScalar;
 
     public Transform TargetTransform => targetTransform;
     public Rigidbody2D PlayerRB => playerRB;
-    public Vector2 FireInput => fireInput;
-    public Vector2 MoveInput => moveInput;
     public bool PlayerIsDead => playerIsDead;
     public Controller[] AttachedControllers => attachedControllers;
 
@@ -46,18 +46,15 @@ public class Player : MonoBehaviour
         playerIsDead = false;
         Instantiate(shipPrefab, this.transform);
         attachedControllers = shipPrefab.GetComponentsInChildren<Controller>();
-        playerInputActions = new JoyStickInput();
+        playerInputActions = new PlayerInputActions();
         playerRB = GetComponent<Rigidbody2D>();
-        playerRB.mass = shipPrefab.GetComponent<ShipTraits>().ShipMass;
         Debug.Log(playerRB.ToString());
-        unitManager = GetComponent<UnitManager2>();
         playerRB.centerOfMass = Vector3.zero;
         approxUnitSpeed = ((speed / playerRB.drag) - Time.fixedDeltaTime * speed) / playerRB.mass;
-        playerInputActions.Player.Enable();
-        playerInputActions.Player.Shoot.started += Shoot_started;
-        playerInputActions.Player.Shoot.canceled += Shoot_canceled;
-        playerInputActions.Player.Move.performed += Move_performed;
-        playerInputActions.Player.Shoot.performed += Shoot_performed;
+        playerInputActions.PlayerMovement.Enable();
+        playerInputActions.PlayerMovement.Shoot.started += Shoot_started;
+        playerInputActions.PlayerMovement.Shoot.canceled += Shoot_canceled;
+        playerInputActions.PlayerMovement.Shoot.performed += Shoot_performed;
         rvo = GetComponentInChildren<RVOController>();
         if (rvo != null)
             Debug.Log("Successfully got RVO");
@@ -95,22 +92,21 @@ public class Player : MonoBehaviour
             attachedWeaponControllers[i].StopRepeatFire();
     }
 
-    private void Move_performed(InputAction.CallbackContext context) { }
-
     void FixedUpdate()
     {
         TurnShip();
-        Move();
+        ApplyThrust();
         minimapCamera.orthographicSize = Mathf.Clamp((maxZoom - minZoom) * (playerRB.velocity.magnitude / approxUnitSpeed) + minZoom, minZoom, maxZoom);
         rvo.velocity = playerRB.velocity;
     }
 
     private void Update()
     {
-        moveInput = playerInputActions.Player.Move.ReadValue<Vector2>();
-        if (playerInputActions.Player.Shoot.ReadValue<Vector2>() != Vector2.zero)
+        thrustInput = playerInputActions.PlayerMovement.ApplyThrust.ReadValue<Vector2>();
+        turnInput = playerInputActions.PlayerMovement.Turn.ReadValue<float>();
+        if (playerInputActions.PlayerMovement.Shoot.ReadValue<Vector2>() != Vector2.zero)
         {
-            fireDirection.transform.rotation = Quaternion.FromToRotation(Vector2.down, playerInputActions.Player.Shoot.ReadValue<Vector2>());
+            fireDirection.transform.rotation = Quaternion.FromToRotation(Vector2.right, playerInputActions.PlayerMovement.Shoot.ReadValue<Vector2>());
         }
     }
 
@@ -127,19 +123,22 @@ public class Player : MonoBehaviour
 
     private void TurnShip()
     {
-        if (moveInput != Vector2.zero)
+            Debug.Log("Turn: " + turnInput);
+            PlayerRB.AddTorque(turnInput * turnSpeed);
+    }
+
+    private void ApplyThrust()
+    {
+        if (thrustInput != Vector2.zero)
         {
-            float angle = Mathf.Atan2(-moveInput.x, moveInput.y) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.AngleAxis(angle, Vector3.forward), .1f);
+            Debug.Log("Tranform: " + transform.up);
+            thrustInput = (Vector2.Dot(thrustInput, transform.up)) * transform.up;
+            Debug.Log("Thrust: " + thrustInput.ToString());
+            playerRB.AddRelativeForce(speed * thrustInput);
         }
     }
 
-    private void Move()
-    {
-        playerRB.AddForce(speed * moveInput.normalized);
-    }
-
-    public void PlayShieldHitAnim()
+        public void PlayShieldHitAnim()
     {
         shieldHitAnim.SetActive(true);
         StartCoroutine(DeactivateAfterTime(.1f, shieldHitAnim));

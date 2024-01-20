@@ -19,13 +19,15 @@ MonoBehaviour:
   sellCost: 10
   storeIcon: {fileID: 21300022, guid: 56d84991286850f428b4e7df0cca7380, type: 3}
   faction: 0
+  storeDisplayColor: {r: 0.6981132, g: 0.1953838, b: 0.1953838, a: 1}
   bulletPrefab: {fileID: 4266625366842318222, guid: bcad4bbc161bd7344a24ef6f09d1c333, type: 3}
-  bulletSpeed: -40
+  bulletSpeed: 40
   fireDelay: 0.3
   powerCost: 1
   targetConeAngle: 30
   accuracy: 0.4
+  range: 0
+  minRotationAngle: 0
+  maxRotationAngle: 0
   tracingEnable: 1
-  deltaAngle: 1
-  oneStepRotation: 0
-  deltaTimeStepRotation: 0
+  maxAngularSpeed: 0

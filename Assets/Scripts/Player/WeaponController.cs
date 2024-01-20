@@ -118,34 +118,11 @@ public class WeaponController : Controller
     {
         if (traceTarget == null)
             return false;
-        Vector2 direct = transform.position - traceTarget.position;
-        float angle = Vector3.Angle(Vector3.up, direct);
-        if ((traceTarget.position.x - transform.TransformPoint(Vector3.zero).x) < 0)
-        {
-            angle = 360.0f - angle;
-        }
-        if (transform.rotation.eulerAngles.z > angle - targetConeAngle / 2 && transform.rotation.eulerAngles.z < angle + targetConeAngle / 2)
+        Vector2 direct = (traceTarget.position - transform.position).normalized;
+        float targetRotation = Mathf.Atan2(direct.y, direct.x) * Mathf.Rad2Deg;
+        if (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.z, targetRotation)) < targetConeAngle / 2)
             return true;
         return false;
-    }
-
-    public Vector3 GetNearestAngle(float angle)
-    {
-        //Debug.Log("Get Nearest Angle is operating on angle: " + angle);
-        if ((traceTarget.position.x - transform.TransformPoint(Vector3.zero).x) < 0)
-        {
-            angle = 360.0f - angle;
-        }
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.up);
-        Vector3 direction = q * Vector3.forward;
-
-        angle = Vector3.Angle(Vector3.up, direction);
-        if ((traceTarget.position.x - transform.TransformPoint(Vector3.zero).x) < 0)
-        {
-            angle = 360.0f - angle;
-        }
-        //Debug.Log("New angle is: " + angle);
-        return direction;
     }
 
     public bool TargetInEngagementRange()

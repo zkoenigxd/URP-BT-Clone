@@ -12,7 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject upgradeMenu;
     [SerializeField] GameObject controlMenuUI;
     [SerializeField] GameObject infoDisplayUI;
-    [SerializeField] GameObject controlUI;
+    //[SerializeField] GameObject controlUI;
     GameManager _gameManager;
     AudioManager _audioManager;
 
@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
         restartButton.gameObject.SetActive(false);
         restartOnWinButton.gameObject.SetActive(false);
         upgradeMenu.SetActive(false);
-        controlUI.SetActive(true);
+        //controlUI.SetActive(true);
         controlMenuUI.SetActive(true);
         infoDisplayUI.SetActive(true);
         LockScreenToLandscape();
@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
         _gameManager.GetCurrency();
         _gameManager.AddData();
         PauseGame();
-        controlUI.SetActive(false);
+        //controlUI.SetActive(false);
         infoDisplayUI.SetActive(false);
         upgradeMenu.SetActive(true);
     }
@@ -49,7 +49,7 @@ public class UIManager : MonoBehaviour
     {
         ResumeGame();
         upgradeMenu.SetActive(false);
-        controlUI.SetActive(true);
+        //controlUI.SetActive(true);
         infoDisplayUI.SetActive(true);
         controlMenuUI.SetActive(true);
     }
